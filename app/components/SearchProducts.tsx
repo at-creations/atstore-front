@@ -1,0 +1,204 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { ItemCard } from "./ItemCard"
+import TextField from "@mui/material/TextField"
+import Select, { SingleValue, StylesConfig } from "react-select"
+import { SkeletonCard } from "./SkeletonCard"
+import Pagination from "./Pagination"
+import { fetchCategories, fetchFilteredProducts } from "@/app/utils/api"
+import type { Category, Product } from "@/app/types/api"
+import { slugify } from "@/app/utils/slugify"
+
+interface Option {
+  value: string
+  label: string
+}
+
+const customSelectStyles: StylesConfig<Option, false> = {
+  control: (provided) => ({
+    ...provided,
+    height: '56px', // Match the height of the TextField
+    minHeight: '56px',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    height: '56px',
+    padding: '0 8px',
+  }),
+  input: (provided) => ({
+    ...provided,
+    margin: '0',
+    padding: '0',
+  }),
+  indicatorsContainer: (provided) => ({
+    ...provided,
+    height: '56px',
+  }),
+}
+
+export function SearchProducts() {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState<Option>({ value: "All", label: "All Categories" })
+  const [sortBy, setSortBy] = useState<Option>({ value: "name-asc", label: "Name (A-Z)" })
+  const [priceRange, setPriceRange] = useState<Option>({ value: "0-20000", label: "All Prices" })
+  const [categories, setCategories] = useState<Category[]>([])
+  const [products, setProducts] = useState<Product[]>([])
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true)
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const itemsPerPage = 12
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const fetchedCategories = await fetchCategories()
+        setCategories(fetchedCategories)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred while fetching categories")
+      } finally {
+        setIsLoadingCategories(false)
+      }
+    }
+
+    loadCategories()
+  }, [])
+
+  useEffect(() => {
+    async function loadProducts() {
+      setIsLoadingProducts(true)
+      try {
+        const [priceMin, priceMax] = priceRange.value.split("-").map(Number)
+        const [sortField, sortOrder] = sortBy.value.split("-")
+        const offset = (currentPage - 1) * itemsPerPage
+        const fetchedProductsResponse = await fetchFilteredProducts(
+          itemsPerPage,
+          offset,
+          searchTerm,
+          priceMin,
+          priceMax,
+          sortField,
+          sortOrder,
+          selectedCategory.value === "All" ? "" : selectedCategory.value
+        )
+        setProducts(fetchedProductsResponse.data)
+        if (fetchedProductsResponse.metadata) {
+          setTotalPages(Math.ceil(fetchedProductsResponse.metadata.total / itemsPerPage))
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred while fetching products")
+      } finally {
+        setIsLoadingProducts(false)
+      }
+    }
+
+    loadProducts()
+  }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [currentPage])
+
+  const handleCategoryChange = (selectedOption: SingleValue<Option>) => {
+    if (selectedOption) {
+      setSelectedCategory(selectedOption)
+      setCurrentPage(1) // Reset to first page on filter change
+    }
+  }
+
+  const handleSortByChange = (selectedOption: SingleValue<Option>) => {
+    if (selectedOption) {
+      setSortBy(selectedOption)
+      setCurrentPage(1) // Reset to first page on filter change
+    }
+  }
+
+  const handlePriceRangeChange = (selectedOption: SingleValue<Option>) => {
+    if (selectedOption) {
+      setPriceRange(selectedOption)
+      setCurrentPage(1) // Reset to first page on filter change
+    }
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  return (
+    <div>
+      <div className="mb-8 p-4 border rounded-lg space-y-4 md:space-y-0 md:flex md:space-x-4">
+        <div className="flex-1">
+          <TextField
+            id="search"
+            label="Search"
+            variant="outlined"
+            fullWidth
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <div className="flex-1">
+          <Select
+            styles={customSelectStyles}
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            options={[
+              { value: "All", label: "All Categories" },
+              ...categories.map((category) => ({ value: category._id, label: category.name })),
+            ]}
+            isLoading={isLoadingCategories}
+          />
+        </div>
+
+        <div className="flex-1">
+          <Select
+            styles={customSelectStyles}
+            value={sortBy}
+            onChange={handleSortByChange}
+            options={[
+              { value: "name-asc", label: "Name (A-Z)" },
+              { value: "name-desc", label: "Name (Z-A)" },
+              { value: "price-asc", label: "Price (Low-High)" },
+              { value: "price-desc", label: "Price (High-Low)" },
+            ]}
+          />
+        </div>
+
+        <div className="flex-1">
+          <Select
+            styles={customSelectStyles}
+            value={priceRange}
+            onChange={handlePriceRangeChange}
+            options={[
+              { value: "0-20000", label: "All Prices" },
+              { value: "0-50", label: "Under $50" },
+              { value: "50-100", label: "$50 - $100" },
+              { value: "100-250", label: "$100 - $250" },
+              { value: "250-20000", label: "Above $250" },
+            ]}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {isLoadingProducts
+          ? Array.from({ length: itemsPerPage }).map((_, index) => (
+              <SkeletonCard key={index} />
+            ))
+          : products.map((product) => (
+              <ItemCard key={product._id} product={product} slug={slugify(product.name)} />
+            ))}
+      </div>
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
+    </div>
+  )
+}
+
