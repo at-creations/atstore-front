@@ -1,0 +1,12 @@
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: atcreations-frontend
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      NODE_ENV: production
+    restart: always
+    command: npm start
