@@ -22,7 +22,7 @@ body {
 }
 
 .gradient-bg {
-  @apply bg-gradient-to-r from-primary-light to-blue-400 dark:from-primary-dark dark:to-blue-600;
+  @apply bg-gradient-to-r from-primary-light to-blue-500 dark:from-primary-dark dark:to-blue-600;
 }
 
 .card {

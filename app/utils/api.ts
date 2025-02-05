@@ -63,3 +63,33 @@ export async function fetchProductDetails(productId: string): Promise<Product> {
     throw new Error(error instanceof Error ? error.message : "An error occurred while fetching product details")
   }
 }
+
+export async function fetchFilteredProducts(
+  limit = 12,
+  offset = 0,
+  search = "",
+  priceMin = 0,
+  priceMax = Infinity,
+  sortBy = "name",
+  sortOrder = "asc",
+  categoryId = ""
+): Promise<ApiResponse<Product[]>> {
+  try {
+    const [response] = await Promise.all([
+      fetch(
+        `${API_HOST}/product/search?limit=${limit}&offset=${offset}&search=${search}&price_min=${priceMin}&price_max=${priceMax}&sort=${sortBy}&order=${sortOrder}&categories=${categoryId}`
+      ),
+      delay(300)
+    ])
+    if (!response.ok) {
+      throw new Error("Failed to fetch products")
+    }
+    const data: ApiResponse<Product[]> = await response.json()
+    return {
+      ...data,
+      data: data.data.products
+    }
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "An error occurred while fetching products")
+  }
+}

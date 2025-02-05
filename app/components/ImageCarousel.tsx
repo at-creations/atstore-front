@@ -5,6 +5,8 @@ import Image from "next/image"
 import Slider from "react-slick"
 import { Button } from "./ui/Button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import Lightbox from "yet-another-react-lightbox"
+import "yet-another-react-lightbox/styles.css"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
@@ -15,6 +17,7 @@ interface ImageCarouselProps {
 
 export function ImageCarousel({ images, productName }: ImageCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const sliderRef = React.useRef<Slider>(null)
 
   const settings = {
@@ -52,13 +55,13 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
       <div className="relative">
         <Slider ref={sliderRef} {...settings}>
           {imagesToShow.map((image, index) => (
-            <div key={index} className="relative h-96">
+            <div key={index} className="relative h-96" onClick={() => setIsLightboxOpen(true)}>
               <Image
                 src={image}
                 alt={`${productName} - Image ${index + 1}`}
                 layout="fill"
                 objectFit="cover"
-                className="rounded-lg"
+                className="rounded-lg cursor-pointer"
                 placeholder="blur"
                 blurDataURL="/placeholder.svg"
               />
@@ -66,14 +69,14 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
           ))}
         </Slider>
         <Button
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10"
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 z-5 bg-black bg-opacity-30 hover:bg-opacity-50"
           onClick={goToPrev}
           variant="secondary"
         >
           <ChevronLeft className="w-6 h-6" />
         </Button>
         <Button
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 z-5 bg-black bg-opacity-30 hover:bg-opacity-50"
           onClick={goToNext}
           variant="secondary"
         >
@@ -98,6 +101,14 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
           </button>
         ))}
       </div>
+      {isLightboxOpen && (
+        <Lightbox
+          open={isLightboxOpen}
+          close={() => setIsLightboxOpen(false)}
+          slides={imagesToShow.map((image) => ({ src: image }))}
+          index={currentSlide}
+        />
+      )}
     </div>
   )
 }

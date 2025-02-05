@@ -10,6 +10,7 @@ import type { Category, Product } from "../types/api"
 import { SkeletonCard } from "./SkeletonCard"
 import { SkeletonButton } from "./SkeletonButton"
 import { slugify } from "../utils/slugify"
+import { DEFAULT_PAGE_SIZE } from "@/app/constants"
 
 export function ProductList() {
   const searchParams = useSearchParams()
@@ -24,7 +25,7 @@ export function ProductList() {
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(initialPage)
   const [totalPages, setTotalPages] = useState(1)
-  const itemsPerPage = 12
+  const itemsPerPage = DEFAULT_PAGE_SIZE
 
   useEffect(() => {
     async function loadCategories() {

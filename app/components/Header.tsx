@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { Home, ShoppingBag, Search, Tag } from "lucide-react"
+import Image from "next/image"
+import { CDN_HOST } from "../constants"
 
 export default function Header() {
   const navItems = [
@@ -13,7 +15,13 @@ export default function Header() {
     <header className="gradient-bg text-white fixed top-0 left-0 w-full z-10">
       <nav className="container mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between items-center">
         <Link href="/" className="text-2xl font-bold mb-4 sm:mb-0 animate-fadeIn">
-          AT Creations
+          <Image
+            src={`${CDN_HOST}/data/brand_logo.png`}
+            alt="Logo"
+            width={250}
+            height={64}
+            className="w-auto h-12"
+          />
         </Link>
         <ul className="flex space-x-4">
           {navItems.map((item, index) => (

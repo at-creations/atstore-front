@@ -7,7 +7,7 @@ import Header from "@/app/components/Header"
 import Footer from "@/app/components/Footer"
 import { useEffect } from "react"
 import { useTheme } from "next-themes"
-import type React from "react" // Added import for React
+import type React from "react"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -35,9 +35,17 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={theme}>
+      <head>
+        <title>AT Creations Store</title>
+        <meta
+          name="description"
+          content="AT Creations Store - Your one-stop shop for all things AT Creations"
+        />
+        <link rel="icon" href="https://cdn2.atcreations.ca/logo/logo_no_txt_no_bg.png" type="image/png" />
+      </head>
       <body className={inter.className}>
         <Header />
-        <main className="min-h-screen pt-14">{children}</main>
+        <main className="min-h-screen pt-32 sm:pt-24">{children}</main>
         <Footer />
       </body>
     </html>
