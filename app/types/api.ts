@@ -22,7 +22,7 @@ export interface Category {
 
 export interface ApiResponse<T> {
   message: string
-  data: T | any
+  data: T
   metadata?: {
     total: number
     limit: number
@@ -30,3 +30,14 @@ export interface ApiResponse<T> {
   }
 }
 
+export interface ApiResponseProducts<T> {
+  message: string
+  data: {
+    products: T
+  }
+  metadata?: {
+    total: number
+    limit: number
+    offset: number
+  }
+}

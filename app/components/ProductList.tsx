@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams, usePathname } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { ItemCard } from "./ItemCard"
 import { Button } from "./ui/Button"
 import Pagination from "./Pagination"
@@ -14,7 +14,6 @@ import { DEFAULT_PAGE_SIZE } from "@/app/constants"
 
 export function ProductList() {
   const searchParams = useSearchParams()
-  const pathname = usePathname()
   const initialPage = parseInt(searchParams.get("page") || "1", 10)
   const initialCategory = searchParams.get("category") || "All"
   const [selectedCategory, setSelectedCategory] = useState(initialCategory)
@@ -64,7 +63,7 @@ export function ProductList() {
     }
 
     loadProducts()
-  }, [selectedCategory, currentPage])
+  }, [selectedCategory, currentPage, itemsPerPage])
 
   useEffect(() => {
     window.scrollTo(0, 0)

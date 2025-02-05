@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Home, ShoppingBag, Search, Tag } from "lucide-react"
+import { Home, ShoppingBag, Search } from "lucide-react"
 import Image from "next/image"
 import { CDN_HOST } from "../constants"
 

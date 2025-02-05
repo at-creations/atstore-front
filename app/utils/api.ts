@@ -1,5 +1,5 @@
 import { API_HOST } from "../constants"
-import type { Product, Category, ApiResponse } from "../types/api"
+import type { Product, Category, ApiResponse, ApiResponseProducts } from "../types/api"
 
 export async function fetchFeaturedProducts(): Promise<Product[]> {
   try {
@@ -40,7 +40,7 @@ export async function fetchProductsByCategory(categoryId: string, limit = 12, of
     if (!response.ok) {
       throw new Error("Failed to fetch products")
     }
-    const data: ApiResponse<Product[]> = await response.json()
+    const data: ApiResponseProducts<Product[]> = await response.json()
     return {
       ...data,
       data: data.data.products
@@ -84,7 +84,7 @@ export async function fetchFilteredProducts(
     if (!response.ok) {
       throw new Error("Failed to fetch products")
     }
-    const data: ApiResponse<Product[]> = await response.json()
+    const data: ApiResponseProducts<Product[]> = await response.json()
     return {
       ...data,
       data: data.data.products

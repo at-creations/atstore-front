@@ -183,6 +183,8 @@ export function SearchProducts() {
         </div>
       </div>
 
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {isLoadingProducts
           ? Array.from({ length: itemsPerPage }).map((_, index) => (
