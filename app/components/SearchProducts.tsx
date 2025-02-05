@@ -9,6 +9,7 @@ import Pagination from "./Pagination"
 import { fetchCategories, fetchFilteredProducts } from "@/app/utils/api"
 import type { Category, Product } from "@/app/types/api"
 import { slugify } from "@/app/utils/slugify"
+import { DEFAULT_PAGE_SIZE } from "../constants"
 
 interface Option {
   value: string
@@ -49,7 +50,7 @@ export function SearchProducts() {
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const itemsPerPage = 12
+  const itemsPerPage = DEFAULT_PAGE_SIZE
 
   useEffect(() => {
     async function loadCategories() {
@@ -87,6 +88,7 @@ export function SearchProducts() {
         if (fetchedProductsResponse.metadata) {
           setTotalPages(Math.ceil(fetchedProductsResponse.metadata.total / itemsPerPage))
         }
+        setError(null)
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred while fetching products")
       } finally {
@@ -150,6 +152,7 @@ export function SearchProducts() {
               ...categories.map((category) => ({ value: category._id, label: category.name })),
             ]}
             isLoading={isLoadingCategories}
+            isSearchable={false}
           />
         </div>
 
@@ -164,6 +167,7 @@ export function SearchProducts() {
               { value: "price-asc", label: "Price (Low-High)" },
               { value: "price-desc", label: "Price (High-Low)" },
             ]}
+            isSearchable={false}
           />
         </div>
 
@@ -179,6 +183,7 @@ export function SearchProducts() {
               { value: "100-250", label: "$100 - $250" },
               { value: "250-20000", label: "Above $250" },
             ]}
+            isSearchable={false}
           />
         </div>
       </div>
@@ -190,6 +195,8 @@ export function SearchProducts() {
           ? Array.from({ length: itemsPerPage }).map((_, index) => (
               <SkeletonCard key={index} />
             ))
+          : products.length === 0
+          ? <div className="col-span-4 text-center text-gray-500">No items match your search criteria.</div>
           : products.map((product) => (
               <ItemCard key={product._id} product={product} slug={slugify(product.name)} />
             ))}
