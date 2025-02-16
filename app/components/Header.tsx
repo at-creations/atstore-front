@@ -16,10 +16,10 @@ export default function Header() {
       <nav className="container mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between items-center">
         <Link href="/" className="text-2xl font-bold mb-4 sm:mb-0 animate-fadeIn">
           <Image
-            src={`${CDN_HOST}/data/brand_logo.png`}
+            src={`${CDN_HOST}/data/logo_white_rec_text.png`}
             alt="Logo"
-            width={250}
-            height={64}
+            width={253}
+            height={58}
             className="w-auto h-12"
           />
         </Link>
