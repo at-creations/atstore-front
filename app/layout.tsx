@@ -8,6 +8,7 @@ import Footer from "@/app/components/Footer"
 import { useEffect } from "react"
 import { useTheme } from "next-themes"
 import type React from "react"
+import { metadata } from "./metadata"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -36,12 +37,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={theme}>
       <head>
-        <title>AT Creations Store</title>
-        <meta
-          name="description"
-          content="AT Creations Store - Your one-stop shop for all things AT Creations"
-        />
-        <link rel="icon" href="https://cdn2.atcreations.ca/logo/logo_no_txt_no_bg.png" type="image/png" />
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <link rel="icon" href={metadata.icons.icon} />
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
+        <meta property="og:url" content={metadata.openGraph.url} />
+        <meta property="og:type" content={metadata.openGraph.type} />
+        <meta property="og:image" content={metadata.openGraph.images[0].url} />
+        <meta name="twitter:card" content={metadata.twitter.card} />
+        <meta name="twitter:title" content={metadata.twitter.title} />
+        <meta name="twitter:description" content={metadata.twitter.description} />
+        <meta name="twitter:image" content={metadata.twitter.image} />
+        {metadata.additionalMetaTags.map((tag, index) => (
+          <meta key={index} name={tag.name} content={tag.content} />
+        ))}
       </head>
       <body className={inter.className}>
         <Header />

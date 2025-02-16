@@ -63,7 +63,7 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
                 objectFit="cover"
                 className="rounded-lg cursor-pointer"
                 placeholder="blur"
-                blurDataURL="/placeholder.svg"
+                blurDataURL="https://placehold.co/1200x900?text=Loading..."
               />
             </div>
           ))}
