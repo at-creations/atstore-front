@@ -11,7 +11,6 @@ interface ItemCardProps {
 
 export function ItemCard({ product, slug }: ItemCardProps) {
   const imageUrl = product.thumbnail ? `${CDN_HOST}/${product.thumbnail}` : "https://placehold.co/1200x900?text=No%20Image"
-  console.log(imageUrl)
 
   return (
     <Link href={`/products/${product._id}/${slug}`} passHref>
