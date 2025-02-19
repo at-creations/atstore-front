@@ -45,6 +45,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H server-1.atcreations.ca >> ~/.ssh/known_hosts
+
       - name: Copy files to server
         run: rsync -avz --delete --exclude '.git*' ./ deploy@server-1.atcreations.ca:/home/deploy/atstore-front/
 
