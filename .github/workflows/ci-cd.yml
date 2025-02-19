@@ -63,6 +63,7 @@ jobs:
         run: |
           ssh deploy@server-1.atcreations.ca <<EOF
           cd /home/deploy/atstore-front/
+          mkdir -p .next
           docker compose down
           docker compose build --no-cache
           docker compose up -d
