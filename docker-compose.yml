@@ -3,7 +3,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: atcreations-frontend
+    container_name: atcreations-frontend_${NODE_ENV}
     ports:
       - "${PORT}:${PORT}"
     environment:
