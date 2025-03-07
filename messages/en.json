@@ -1,0 +1,33 @@
+{
+  "common": {
+    "home": "Home",
+    "products": "Products",
+    "search": "Search",
+    "about": "About Us",
+    "contact": "Contact Us"
+  },
+  "home": {
+    "welcome": "Welcome to AT Creations",
+    "tagline": "Discover unique and creative products",
+    "exploreButton": "Explore Our Collection"
+  },
+  "about": {
+    "title": "About Us",
+    "paragraph1": "A.T Creations offers a curated collection of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life.",
+    "paragraph2": "Beyond retail, A.T Creations provides a dedicated workshop space where creativity can flourish.",
+    "paragraph3": "Discover the beauty of handcrafted artistry at A.T Creations, your one-of-a-kind souvenir destination in Vancouver."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "hours": "Business Hours"
+  },
+  "products": {
+    "title": "Our Products",
+    "categories": "Categories",
+    "all": "All",
+    "noResults": "No items match your search criteria."
+  }
+}
