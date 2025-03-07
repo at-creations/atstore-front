@@ -1,16 +1,19 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Card } from "./ui/Card"
-import { CDN_HOST } from "../constants"
-import type { Product } from "../types/api"
+import Image from "next/image";
+import { Link } from "@/i18n/navigation";
+import { Card } from "./ui/Card";
+import { CDN_HOST } from "../constants";
+import type { Product } from "../types/api";
 
 interface ItemCardProps {
-  product: Product
-  slug: string
+  product: Product;
+  slug: string;
+  locale?: string;
 }
 
-export function ItemCard({ product, slug }: ItemCardProps) {
-  const imageUrl = product.thumbnail ? `${CDN_HOST}/${product.thumbnail}` : "https://placehold.co/1200x900?text=No%20Image"
+export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
+  const imageUrl = product.thumbnail
+    ? `${CDN_HOST}/${product.thumbnail}`
+    : "https://placehold.co/1200x900?text=No%20Image";
 
   return (
     <Link href={`/products/${product._id}/${slug}`} passHref>
@@ -18,7 +21,7 @@ export function ItemCard({ product, slug }: ItemCardProps) {
         <div className="relative h-64">
           <Image
             src={imageUrl}
-            alt={product.name}
+            alt={locale == "vi" && product.name_vi ? product.name_vi : product.name}
             layout="fill"
             objectFit="cover"
             placeholder="blur"
@@ -26,12 +29,17 @@ export function ItemCard({ product, slug }: ItemCardProps) {
           />
         </div>
         <div className="p-4 flex-grow">
-          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">{product.name}</h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-2">{product.description}</p>
-          <p className="text-blue-600 dark:text-blue-400 font-bold">${product.price.toFixed(2)}</p>
+          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            {locale == "vi" && product.name_vi ? product.name_vi : product.name}
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            {locale == "vi" && product.description_vi ? product.description_vi : product.description}
+          </p>
+          <p className="text-blue-600 dark:text-blue-400 font-bold">
+            ${product.price.toFixed(2)}
+          </p>
         </div>
       </Card>
     </Link>
-  )
+  );
 }
-

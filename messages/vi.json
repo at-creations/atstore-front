@@ -9,13 +9,17 @@
   "home": {
     "welcome": "Chào mừng đến với AT Creations",
     "tagline": "Khám phá sản phẩm độc đáo và sáng tạo",
-    "exploreButton": "Khám phá bộ sưu tập của chúng tôi"
+    "exploreButton": "Khám phá sản phẩm"
   },
   "about": {
     "title": "Về chúng tôi",
     "paragraph1": "A.T Creations là cửa hàng chuyên bán các mặt hàng thủ công dùng làm quà tặng, đồ trang trí hay đồ lưu niệm trong gia đình với mong muốn mang lại cho khách hàng những sản phẩm giá trị nghệ thuật cao. Chúng tôi cũng tự hào giới thiệu những sản phẩm này được tạo ra từ những bàn tay nghệ nhân truyền thống tại đất nước chúng tôi, với mong muốn mang đến cho các bạn bè trong nước và quốc tế những sản phẩm đặc trưng riêng của mỗi vùng miền, cũng như tâm huyết của người làng nghề gửi gắm trong từng sản phẩm.",
-    "paragraph2": "Các sản phẩm của chúng tôi bao gồm đồ lưu niệm, phụ kiện, quà tặng, văn phòng phẩm, và đặc biệt nhất là chúng tôi có 1 không gian workshop dành riêng cho những ai thích sáng tạo, thích thư giãn sau những giờ căng thẳng hoặc cần 1 nơi để trầm lắng để suy tư.",
+    "paragraph2": "Các sản phẩm của chúng tôi bao gồm đồ lưu niệm, phụ kiện, quà tặng, văn phòng phẩm, và đặc biệt nhất là chúng tôi có một không gian workshop dành riêng cho những ai thích sáng tạo, thích thư giãn sau những giờ căng thẳng hoặc cần một nơi để trầm lắng để suy tư.",
     "paragraph3": "A.T Creations hy vọng sẽ là cửa hàng lưu niệm độc đáo mà bạn có thể tìm thấy ở Vancover."
+  },
+  "featuredProducts": {
+    "title": "Sản phẩm nổi bật",
+    "viewAll": "Tất cả sản phẩm"
   },
   "contact": {
     "title": "Liên hệ",
@@ -29,5 +33,19 @@
     "categories": "Danh mục",
     "all": "Tất cả",
     "noResults": "Không có sản phẩm phù hợp với tiêu chí tìm kiếm của bạn."
+  },
+  "search": {
+    "title": "Tìm kiếm sản phẩm",
+    "search": "Tìm kiếm",
+    "allCategories": "Tất cả danh mục",
+    "allPrices": "Tất cả mức giá",
+    "name": "Tên",
+    "price": "Giá",
+    "lowToHigh": "Thấp-Cao",
+    "highToLow": "Cao-Thấp",
+    "noResults": "Không có sản phẩm phù hợp với tiêu chí tìm kiếm của bạn."
+  },
+  "error": {
+    "fetchFailed": "Đã xảy ra lỗi trong quá trình tải dữ liệu. Vui lòng thử lại sau."
   }
 }

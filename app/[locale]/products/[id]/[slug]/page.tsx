@@ -6,6 +6,7 @@ import { ProductDetails } from "@/app/components/ProductDetails"
 import { fetchProductDetails } from "@/app/utils/api"
 import type { Product } from "@/app/types/api"
 import { slugify } from "@/app/utils/slugify"
+import { useLocale } from "next-intl"
 
 export default function ProductPage() {
   const params = useParams()
@@ -15,6 +16,8 @@ export default function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const locale = useLocale()
 
   useEffect(() => {
     async function loadProduct() {
@@ -52,7 +55,10 @@ export default function ProductPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ProductDetails product={product} />
+      <ProductDetails
+        product={product}
+        locale={locale}
+      />
     </div>
   )
 }

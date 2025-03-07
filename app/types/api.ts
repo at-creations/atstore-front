@@ -1,8 +1,10 @@
 export interface Product {
   _id: string
   name: string
+  name_vi?: string
   price: number
   description: string
+  description_vi?: string
   category_ids: string[]
   created_at: string
   updated_at: string
@@ -14,7 +16,9 @@ export interface Product {
 export interface Category {
   _id: string
   name: string
+  name_vi?: string
   description: string
+  description_vi?: string
   created_at: string
   updated_at: string
   id: string

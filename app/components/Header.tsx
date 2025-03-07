@@ -1,20 +1,26 @@
-import Link from "next/link"
-import { Home, ShoppingBag, Search } from "lucide-react"
-import Image from "next/image"
-import { CDN_HOST } from "../constants"
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { Home, ShoppingBag, Search } from "lucide-react";
+import Image from "next/image";
+import { CDN_HOST } from "../constants";
 
 export default function Header() {
+  const t = useTranslations("common");
+
   const navItems = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Products", href: "/products", icon: ShoppingBag },
-    { name: "Search", href: "/search", icon: Search },
+    { name: t("home"), href: "/", icon: Home },
+    { name: t("products"), href: "/products", icon: ShoppingBag },
+    { name: t("search"), href: "/search", icon: Search },
     // { name: "Promotions", href: "/promotions", icon: Tag },
-  ]
+  ];
 
   return (
     <header className="gradient-bg text-white fixed top-0 left-0 w-full z-10">
       <nav className="container mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between items-center">
-        <Link href="/" className="text-2xl font-bold mb-4 sm:mb-0 animate-fadeIn">
+        <Link
+          href="/"
+          className="text-2xl font-bold mb-4 sm:mb-0 animate-fadeIn"
+        >
           <Image
             src={`${CDN_HOST}/data/logo_white_rec_text.png`}
             alt="Logo"
@@ -25,7 +31,11 @@ export default function Header() {
         </Link>
         <ul className="flex space-x-4">
           {navItems.map((item, index) => (
-            <li key={item.name} className="animate-slideUp" style={{ animationDelay: `${index * 0.1}s` }}>
+            <li
+              key={item.name}
+              className="animate-slideUp"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <Link
                 href={item.href}
                 className="flex items-center hover:text-blue-200 dark:text-gray-300 dark:hover:text-blue-300 transition-colors duration-300"
@@ -38,6 +48,5 @@ export default function Header() {
         </ul>
       </nav>
     </header>
-  )
+  );
 }
-
