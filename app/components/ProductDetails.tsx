@@ -52,7 +52,9 @@ export function ProductDetails({
                 passHref
                 className="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800"
               >
-                {category.name}
+                {category.name_vi && locale === "vi"
+                  ? category.name_vi
+                  : category.name}
               </Link>
             ))}
           </div>

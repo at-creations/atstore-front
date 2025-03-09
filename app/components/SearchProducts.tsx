@@ -89,6 +89,9 @@ export function SearchProducts() {
           "created_at",
           "desc",
         ];
+        
+        const updatedSortField = sortField === "name" && locale === "vi" ? "name_vi" : sortField;
+
         const offset = (currentPage - 1) * itemsPerPage;
         const fetchedProductsResponse = await fetchFilteredProducts(
           itemsPerPage,
@@ -96,7 +99,7 @@ export function SearchProducts() {
           searchTerm,
           priceMin,
           priceMax,
-          sortField,
+          updatedSortField,
           sortOrder,
           selectedCategory?.value === "All" ? "" : selectedCategory?.value
         );

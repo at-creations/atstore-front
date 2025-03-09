@@ -30,11 +30,11 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
             blurDataURL="https://placehold.co/1200x900?text=Loading..."
           />
         </div>
-        <div className="p-4 flex-grow">
-          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+        <div className="p-4 flex-grow space-y-2">
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
             {locale == "vi" && product.name_vi ? product.name_vi : product.name}
           </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-2">
+          <p className="text-gray-600 dark:text-gray-300 line-clamp-3">
             {locale == "vi" && product.description_vi
               ? product.description_vi
               : product.description}
@@ -44,6 +44,18 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
               ${product.price.toFixed(2)}
             </p>
           )}
+          <div className="flex flex-wrap gap-2 ">
+            {product.categories?.map((category) => (
+              <div
+                key={category.id}
+                className="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300"
+              >
+                {category.name_vi && locale === "vi"
+                  ? category.name_vi
+                  : category.name}
+              </div>
+            ))}
+          </div>
         </div>
       </Card>
     </Link>
