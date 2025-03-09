@@ -41,6 +41,7 @@ const customSelectStyles: StylesConfig<Option, false> = {
 
 export function SearchProducts() {
   const t = useTranslations("search");
+  const t_error = useTranslations("error");
   const locale = useLocale();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,11 +69,7 @@ export function SearchProducts() {
         const fetchedCategories = await fetchCategories();
         setCategories(fetchedCategories);
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "An error occurred while fetching categories"
-        );
+        setError(err instanceof Error ? err.message : t_error("fetchFailed"));
       } finally {
         setIsLoadingCategories(false);
       }
@@ -114,7 +111,7 @@ export function SearchProducts() {
         setError(
           err instanceof Error
             ? err.message
-            : "An error occurred while fetching products"
+            : t_error("fetchFailed")
         );
       } finally {
         setIsLoadingProducts(false);
@@ -231,7 +228,7 @@ export function SearchProducts() {
           ))
         ) : products.length === 0 ? (
           <div className="col-span-4 text-center text-gray-500">
-            No items match your search criteria.
+            {t("noResults")}
           </div>
         ) : (
           products.map((product) => (
@@ -239,6 +236,7 @@ export function SearchProducts() {
               key={product._id}
               product={product}
               slug={slugify(product.name)}
+              locale={locale}
             />
           ))
         )}
