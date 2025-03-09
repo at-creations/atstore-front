@@ -14,7 +14,7 @@
   "about": {
     "title": "About Us",
     "paragraph1": "A.T Creations offers a curated collection of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life. Each piece is meticulously crafted by skilled artisans, reflecting the rich cultural heritage of our country. From delicate souvenirs and stylish accessories to thoughtful gifts and functional stationery, our shop has something for everyone.",
-    "paragraph2": "Beyond retail, A.T Creations provides a dedicated workshop space where creativity can flourish. Whether you&apos;re seeking a relaxing escape or a place to explore your artistic side, our workshop offers a serene environment for crafting and contemplation.",
+    "paragraph2": "Beyond retail, A.T Creations provides a dedicated workshop space where creativity can flourish. Whether you're seeking a relaxing escape or a place to explore your artistic side, our workshop offers a serene environment for crafting and contemplation.",
     "paragraph3": "Discover the beauty of handcrafted artistry at A.T Creations, your one-of-a-kind souvenir destination in Vancouver."
   },
   "featuredProducts": {
@@ -47,5 +47,12 @@
   },
   "error": {
     "fetchFailed": "An error occurred while fetching data. Please try again later."
+  },
+  "404Page": {
+    "title": "404 - Page Not Found",
+    "message1": "Oops! Looks like you've wandered off the trail!",
+    "message2": "Don't worry! Here's how you can get back on track",
+    "home": "Home",
+    "products": "Products"
   }
 }

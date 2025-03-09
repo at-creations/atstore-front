@@ -47,5 +47,12 @@
   },
   "error": {
     "fetchFailed": "Đã xảy ra lỗi trong quá trình tải dữ liệu. Vui lòng thử lại sau."
+  },
+  "404Page": {
+    "title": "404 - Trang không tìm thấy",
+    "message1": "Tiếc quá! Có vẻ như bạn đã lạc khỏi đường!",
+    "message2": "Đừng lo lắng! Dưới đây là cách để quay lại trang chính",
+    "home": "Trang chủ",
+    "products": "Sản phẩm"
   }
 }

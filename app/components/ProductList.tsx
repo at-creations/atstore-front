@@ -45,6 +45,8 @@ export function ProductList() {
     }
 
     loadCategories();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -76,6 +78,8 @@ export function ProductList() {
     }
 
     loadProducts();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory, currentPage, itemsPerPage]);
 
   useEffect(() => {
