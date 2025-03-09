@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Home, ShoppingBag, Search } from "lucide-react";
 import Image from "next/image";
-import { CDN_HOST } from "../constants";
+import { CDN_HOST } from "@/app/constants";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 export default function Header() {

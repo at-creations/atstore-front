@@ -1,64 +1,81 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { ProductDetails } from "@/app/components/ProductDetails"
-import { fetchProductDetails } from "@/app/utils/api"
-import type { Product } from "@/app/types/api"
-import { slugify } from "@/app/utils/slugify"
-import { useLocale } from "next-intl"
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { ProductDetails } from "@/app/components/ProductDetails";
+import { fetchProductDetails } from "@/app/utils/api";
+import type { Product } from "@/app/types/api";
+import { slugify } from "@/app/utils/slugify";
+import { useLocale, useTranslations } from "next-intl";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
 
 export default function ProductPage() {
-  const params = useParams()
-  const router = useRouter()
-  const productId = params.id
-  const slug = params.slug
-  const [product, setProduct] = useState<Product | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const params = useParams();
+  const router = useRouter();
+  const productId = params.id;
+  const slug = params.slug;
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const locale = useLocale()
+  const locale = useLocale();
+  const t = useTranslations("common");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     async function loadProduct() {
       try {
-        const fetchedProduct = await fetchProductDetails(productId as string)
-        setProduct(fetchedProduct)
+        const fetchedProduct = await fetchProductDetails(productId as string);
+        setProduct(fetchedProduct);
 
         // Check if the slug in the URL matches the product's actual slug
-        const actualSlug = slugify(fetchedProduct.name)
+        const actualSlug = slugify(fetchedProduct.name);
         if (slug !== actualSlug) {
           // Redirect to the correct URL with the actual slug
-          router.replace(`/products/${productId}/${actualSlug}`)
+          router.replace(`/products/${productId}/${actualSlug}`);
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred while fetching product details")
+        setError(
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching product details"
+        );
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
 
-    loadProduct()
-  }, [productId, slug, router])
+    loadProduct();
+  }, [productId, slug, router]);
 
   if (isLoading) {
-    return <div className="container mx-auto px-4 py-8">Loading...</div>
+    return <div className="container mx-auto px-4 py-8">Loading...</div>;
   }
 
   if (error) {
-    return <div className="container mx-auto px-4 py-8">Error: {error}</div>
+    return <div className="container mx-auto px-4 py-8">Error: {error}</div>;
   }
 
   if (!product) {
-    return <div className="container mx-auto px-4 py-8">Product not found</div>
+    return <div className="container mx-auto px-4 py-8">Product not found</div>;
   }
+
+  const productName =
+    locale === "vi" && product.name_vi ? product.name_vi : product.name;
+
+  const breadcrumbsItems = [
+    { label: t("home"), href: `/` },
+    { label: t("products"), href: `/products` },
+    { label: productName, href: `/products/${productId}/${slug}` },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ProductDetails
-        product={product}
-        locale={locale}
-      />
+      <Breadcrumbs items={breadcrumbsItems} />
+      <ProductDetails product={product} locale={locale} />
     </div>
-  )
+  );
 }
