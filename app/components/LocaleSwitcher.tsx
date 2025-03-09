@@ -2,7 +2,7 @@
 
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useRef } from "react";
 import { Globe } from "lucide-react";
 
 export default function LocaleSwitcher() {
@@ -11,6 +11,7 @@ export default function LocaleSwitcher() {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const switchLocale = (newLocale: string) => {
     startTransition(() => {
@@ -19,8 +20,24 @@ export default function LocaleSwitcher() {
     setDropdownOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         className="flex items-center text-white"
         onClick={() => setDropdownOpen(!dropdownOpen)}
