@@ -3,10 +3,11 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: atcreations-frontend_${NODE_ENV}
+    container_name: at-frontend-${NODE_ENV}
+    image: at-frontend-${NODE_ENV}
     ports:
       - "${PORT}:${PORT}"
     environment:
-      NODE_ENV: production
+      PORT: ${PORT}
     restart: always
     command: npm start
