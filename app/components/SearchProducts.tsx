@@ -1,79 +1,98 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { ItemCard } from "./ItemCard"
-import TextField from "@mui/material/TextField"
-import Select, { SingleValue, StylesConfig } from "react-select"
-import { SkeletonCard } from "./SkeletonCard"
-import Pagination from "./Pagination"
-import { fetchCategories, fetchFilteredProducts } from "@/app/utils/api"
-import type { Category, Product } from "@/app/types/api"
-import { slugify } from "@/app/utils/slugify"
-import { DEFAULT_PAGE_SIZE } from "../constants"
+import { useState, useEffect } from "react";
+import { ItemCard } from "./ItemCard";
+import TextField from "@mui/material/TextField";
+import Select, { SingleValue, StylesConfig } from "react-select";
+import { SkeletonCard } from "./SkeletonCard";
+import Pagination from "./Pagination";
+import { fetchCategories, fetchFilteredProducts } from "@/app/utils/api";
+import type { Category, Product } from "@/app/types/api";
+import { slugify } from "@/app/utils/slugify";
+import { DEFAULT_PAGE_SIZE } from "../constants";
+import { useLocale, useTranslations } from "next-intl";
 
 interface Option {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 const customSelectStyles: StylesConfig<Option, false> = {
   control: (provided) => ({
     ...provided,
-    height: '56px', // Match the height of the TextField
-    minHeight: '56px',
+    height: "56px", // Match the height of the TextField
+    minHeight: "56px",
   }),
   valueContainer: (provided) => ({
     ...provided,
-    height: '56px',
-    padding: '0 8px',
+    height: "56px",
+    padding: "0 8px",
   }),
   input: (provided) => ({
     ...provided,
-    margin: '0',
-    padding: '0',
+    margin: "0",
+    padding: "0",
   }),
   indicatorsContainer: (provided) => ({
     ...provided,
-    height: '56px',
+    height: "56px",
   }),
-}
+};
 
 export function SearchProducts() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState<Option>({ value: "All", label: "All Categories" })
-  const [sortBy, setSortBy] = useState<Option>({ value: "name-asc", label: "Name (A-Z)" })
-  const [priceRange, setPriceRange] = useState<Option>({ value: "0-20000", label: "All Prices" })
-  const [categories, setCategories] = useState<Category[]>([])
-  const [products, setProducts] = useState<Product[]>([])
-  const [isLoadingProducts, setIsLoadingProducts] = useState(true)
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const itemsPerPage = DEFAULT_PAGE_SIZE
+  const t = useTranslations("search");
+  const locale = useLocale();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<Option | null>(null);
+  const [sortBy, setSortBy] = useState<Option | null>(null);
+  const [priceRange, setPriceRange] = useState<Option | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = DEFAULT_PAGE_SIZE;
+
+  useEffect(() => {
+    setSelectedCategory({ value: "All", label: t("allCategories") });
+    setSortBy({ value: "created_at-desc", label: t("default") });
+    setPriceRange({ value: "0-20000", label: t("allPrices") });
+  }, [t]);
 
   useEffect(() => {
     async function loadCategories() {
       try {
-        const fetchedCategories = await fetchCategories()
-        setCategories(fetchedCategories)
+        const fetchedCategories = await fetchCategories();
+        setCategories(fetchedCategories);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred while fetching categories")
+        setError(
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching categories"
+        );
       } finally {
-        setIsLoadingCategories(false)
+        setIsLoadingCategories(false);
       }
     }
 
-    loadCategories()
-  }, [])
+    loadCategories();
+  }, []);
 
   useEffect(() => {
     async function loadProducts() {
-      setIsLoadingProducts(true)
+      setIsLoadingProducts(true);
       try {
-        const [priceMin, priceMax] = priceRange.value.split("-").map(Number)
-        const [sortField, sortOrder] = sortBy.value.split("-")
-        const offset = (currentPage - 1) * itemsPerPage
+        const [priceMin, priceMax] = priceRange?.value
+          .split("-")
+          .map(Number) || [0, 20000];
+        const [sortField, sortOrder] = sortBy?.value.split("-") || [
+          "created_at",
+          "desc",
+        ];
+        const offset = (currentPage - 1) * itemsPerPage;
         const fetchedProductsResponse = await fetchFilteredProducts(
           itemsPerPage,
           offset,
@@ -82,53 +101,59 @@ export function SearchProducts() {
           priceMax,
           sortField,
           sortOrder,
-          selectedCategory.value === "All" ? "" : selectedCategory.value
-        )
-        setProducts(fetchedProductsResponse.data)
+          selectedCategory?.value === "All" ? "" : selectedCategory?.value
+        );
+        setProducts(fetchedProductsResponse.data);
         if (fetchedProductsResponse.metadata) {
-          setTotalPages(Math.ceil(fetchedProductsResponse.metadata.total / itemsPerPage))
+          setTotalPages(
+            Math.ceil(fetchedProductsResponse.metadata.total / itemsPerPage)
+          );
         }
-        setError(null)
+        setError(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred while fetching products")
+        setError(
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching products"
+        );
       } finally {
-        setIsLoadingProducts(false)
+        setIsLoadingProducts(false);
       }
     }
 
-    loadProducts()
+    loadProducts();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage])
+  }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [currentPage])
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const handleCategoryChange = (selectedOption: SingleValue<Option>) => {
     if (selectedOption) {
-      setSelectedCategory(selectedOption)
-      setCurrentPage(1) // Reset to first page on filter change
+      setSelectedCategory(selectedOption);
+      setCurrentPage(1); // Reset to first page on filter change
     }
-  }
+  };
 
   const handleSortByChange = (selectedOption: SingleValue<Option>) => {
     if (selectedOption) {
-      setSortBy(selectedOption)
-      setCurrentPage(1) // Reset to first page on filter change
+      setSortBy(selectedOption);
+      setCurrentPage(1); // Reset to first page on filter change
     }
-  }
+  };
 
   const handlePriceRangeChange = (selectedOption: SingleValue<Option>) => {
     if (selectedOption) {
-      setPriceRange(selectedOption)
-      setCurrentPage(1) // Reset to first page on filter change
+      setPriceRange(selectedOption);
+      setCurrentPage(1); // Reset to first page on filter change
     }
-  }
+  };
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
 
   return (
     <div>
@@ -136,7 +161,7 @@ export function SearchProducts() {
         <div className="flex-1">
           <TextField
             id="search"
-            label="Search"
+            label={t("search")}
             variant="outlined"
             fullWidth
             value={searchTerm}
@@ -150,8 +175,14 @@ export function SearchProducts() {
             value={selectedCategory}
             onChange={handleCategoryChange}
             options={[
-              { value: "All", label: "All Categories" },
-              ...categories.map((category) => ({ value: category._id, label: category.name })),
+              { value: "All", label: t("allCategories") },
+              ...categories.map((category) => ({
+                value: category._id,
+                label:
+                  locale === "vi" && category.name_vi
+                    ? category.name_vi
+                    : category.name,
+              })),
             ]}
             isLoading={isLoadingCategories}
             isSearchable={false}
@@ -164,10 +195,11 @@ export function SearchProducts() {
             value={sortBy}
             onChange={handleSortByChange}
             options={[
-              { value: "name-asc", label: "Name (A-Z)" },
-              { value: "name-desc", label: "Name (Z-A)" },
-              { value: "price-asc", label: "Price (Low-High)" },
-              { value: "price-desc", label: "Price (High-Low)" },
+              { value: "created_at-desc", label: t("default") },
+              { value: "name-asc", label: t("nameAsc") },
+              { value: "name-desc", label: t("nameDesc") },
+              { value: "price-asc", label: t("priceAsc") },
+              { value: "price-desc", label: t("priceDesc") },
             ]}
             isSearchable={false}
           />
@@ -179,11 +211,11 @@ export function SearchProducts() {
             value={priceRange}
             onChange={handlePriceRangeChange}
             options={[
-              { value: "0-20000", label: "All Prices" },
-              { value: "0-50", label: "Under $50" },
+              { value: "0-20000", label: t("allPrices") },
+              { value: "0-50", label: t("under") + " $50" },
               { value: "50-100", label: "$50 - $100" },
               { value: "100-250", label: "$100 - $250" },
-              { value: "250-20000", label: "Above $250" },
+              { value: "250-20000", label: t("above") + " $250" },
             ]}
             isSearchable={false}
           />
@@ -193,15 +225,23 @@ export function SearchProducts() {
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {isLoadingProducts
-          ? Array.from({ length: itemsPerPage }).map((_, index) => (
-              <SkeletonCard key={index} />
-            ))
-          : products.length === 0
-          ? <div className="col-span-4 text-center text-gray-500">No items match your search criteria.</div>
-          : products.map((product) => (
-              <ItemCard key={product._id} product={product} slug={slugify(product.name)} />
-            ))}
+        {isLoadingProducts ? (
+          Array.from({ length: itemsPerPage }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+        ) : products.length === 0 ? (
+          <div className="col-span-4 text-center text-gray-500">
+            No items match your search criteria.
+          </div>
+        ) : (
+          products.map((product) => (
+            <ItemCard
+              key={product._id}
+              product={product}
+              slug={slugify(product.name)}
+            />
+          ))
+        )}
       </div>
 
       <Pagination
@@ -210,6 +250,5 @@ export function SearchProducts() {
         onPageChange={handlePageChange}
       />
     </div>
-  )
+  );
 }
-

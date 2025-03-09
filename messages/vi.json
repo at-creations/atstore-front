@@ -39,10 +39,13 @@
     "search": "Tìm kiếm",
     "allCategories": "Tất cả danh mục",
     "allPrices": "Tất cả mức giá",
-    "name": "Tên",
-    "price": "Giá",
-    "lowToHigh": "Thấp-Cao",
-    "highToLow": "Cao-Thấp",
+    "nameAsc": "Tên (A-Z)",
+    "nameDesc": "Tên (Z-A)",
+    "priceAsc": "Giá (Thấp-Cao)",
+    "priceDesc": "Giá (Cao-Thấp)",
+    "default": "Mặc định",
+    "under": "Dưới",
+    "above": "Trên",
     "noResults": "Không có sản phẩm phù hợp với tiêu chí tìm kiếm của bạn."
   },
   "error": {

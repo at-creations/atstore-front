@@ -70,8 +70,8 @@ export async function fetchFilteredProducts(
   search = "",
   priceMin = 0,
   priceMax = Infinity,
-  sortBy = "name",
-  sortOrder = "asc",
+  sortBy = "created_at",
+  sortOrder = "desc",
   categoryId = ""
 ): Promise<ApiResponse<Product[]>> {
   try {

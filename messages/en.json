@@ -39,10 +39,13 @@
     "search": "Search",
     "allCategories": "All Categories",
     "allPrices": "All Prices",
-    "name": "Name",
-    "price": "Price",
-    "lowToHigh": "Low-High",
-    "highToLow": "High-Low",
+    "nameAsc": "Name (A-Z)",
+    "nameDesc": "Name (Z-A)",
+    "priceAsc": "Price (Low-High)",
+    "priceDesc": "Price (High-Low)",
+    "default": "Default",
+    "under": "Under",
+    "above": "Above",
     "noResults": "No items match your search criteria."
   },
   "error": {
