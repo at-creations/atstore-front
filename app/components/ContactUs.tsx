@@ -9,35 +9,57 @@ export function ContactUs() {
       <h2 className="section-title">{t("title")}</h2>
       <div className="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 stagger-animation">
         <div className="flex items-center space-x-4">
-          <Mail className="text-blue-500 dark:text-blue-400 flex-shrink-0" size={24} />
+          <Mail
+            className="text-blue-500 dark:text-blue-400 flex-shrink-0"
+            size={24}
+          />
           <div>
-            <h3 className="font-semibold text-gray-800 dark:text-gray-100">{t("email")}</h3>
-            <p className="text-gray-600 dark:text-gray-300">info@atcreations.ca</p>
+            <h3 className="font-semibold text-gray-800 dark:text-gray-100">
+              {t("email")}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              info@atcreations.ca
+            </p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <Phone className="text-blue-500 dark:text-blue-400 flex-shrink-0" size={24} />
+          <Phone
+            className="text-blue-500 dark:text-blue-400 flex-shrink-0"
+            size={24}
+          />
           <div>
-            <h3 className="font-semibold text-gray-800 dark:text-gray-100">{t("phone")}</h3>
-            <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+            <h3 className="font-semibold text-gray-800 dark:text-gray-100">
+              {t("phone")}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">{t("toBeUpdated")}</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <MapPin className="text-blue-500 dark:text-blue-400 flex-shrink-0" size={24} />
+          <MapPin
+            className="text-blue-500 dark:text-blue-400 flex-shrink-0"
+            size={24}
+          />
           <div>
-            <h3 className="font-semibold text-gray-800 dark:text-gray-100">{t("address")}</h3>
-            <p className="text-gray-600 dark:text-gray-300">123 Creative St, Artville, AC 12345</p>
+            <h3 className="font-semibold text-gray-800 dark:text-gray-100">
+              {t("address")}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">{t("toBeUpdated")}</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <Clock className="text-blue-500 dark:text-blue-400 flex-shrink-0" size={24} />
+          <Clock
+            className="text-blue-500 dark:text-blue-400 flex-shrink-0"
+            size={24}
+          />
           <div>
-            <h3 className="font-semibold text-gray-800 dark:text-gray-100">{t("hours")}</h3>
-            <p className="text-gray-600 dark:text-gray-300">Mon-Fri: 9AM-6PM, Sat: 10AM-4PM</p>
+            <h3 className="font-semibold text-gray-800 dark:text-gray-100">
+              {t("hours")}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">{t("toBeUpdated")}</p>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
 

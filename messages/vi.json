@@ -4,7 +4,8 @@
     "products": "Sản phẩm",
     "search": "Tìm kiếm",
     "about": "Về chúng tôi",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "promo": "Khuyến mãi"
   },
   "home": {
     "welcome": "Chào mừng đến với AT Creations",
@@ -26,7 +27,8 @@
     "email": "Email",
     "phone": "Điện thoại",
     "address": "Địa chỉ",
-    "hours": "Giờ làm việc"
+    "hours": "Giờ làm việc",
+    "toBeUpdated": "Sẽ cập nhật sau"
   },
   "products": {
     "title": "Sản phẩm của chúng tôi",
