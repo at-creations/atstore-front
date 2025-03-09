@@ -85,14 +85,12 @@ export function SearchProducts() {
         const [priceMin, priceMax] = priceRange?.value
           .split("-")
           .map(Number) || [0, 20000];
-        let [sortField, sortOrder] = sortBy?.value.split("-") || [
+        const [sortField, sortOrder] = sortBy?.value.split("-") || [
           "created_at",
           "desc",
         ];
         
-        if (sortField === "name") {
-          sortField = locale === "vi" ? "name_vi" : "name";
-        }
+        const updatedSortField = sortField === "name" && locale === "vi" ? "name_vi" : sortField;
 
         const offset = (currentPage - 1) * itemsPerPage;
         const fetchedProductsResponse = await fetchFilteredProducts(
@@ -101,7 +99,7 @@ export function SearchProducts() {
           searchTerm,
           priceMin,
           priceMax,
-          sortField,
+          updatedSortField,
           sortOrder,
           selectedCategory?.value === "All" ? "" : selectedCategory?.value
         );
