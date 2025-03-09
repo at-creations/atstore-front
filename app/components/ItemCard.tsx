@@ -21,7 +21,9 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
         <div className="relative h-64">
           <Image
             src={imageUrl}
-            alt={locale == "vi" && product.name_vi ? product.name_vi : product.name}
+            alt={
+              locale == "vi" && product.name_vi ? product.name_vi : product.name
+            }
             layout="fill"
             objectFit="cover"
             placeholder="blur"
@@ -33,11 +35,15 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
             {locale == "vi" && product.name_vi ? product.name_vi : product.name}
           </h3>
           <p className="text-gray-600 dark:text-gray-300 mb-2">
-            {locale == "vi" && product.description_vi ? product.description_vi : product.description}
+            {locale == "vi" && product.description_vi
+              ? product.description_vi
+              : product.description}
           </p>
-          <p className="text-blue-600 dark:text-blue-400 font-bold">
-            ${product.price.toFixed(2)}
-          </p>
+          {product.price > 0 && (
+            <p className="text-blue-600 dark:text-blue-400 font-bold">
+              ${product.price.toFixed(2)}
+            </p>
+          )}
         </div>
       </Card>
     </Link>
