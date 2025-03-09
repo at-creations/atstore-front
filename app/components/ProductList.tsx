@@ -123,7 +123,7 @@ export function ProductList() {
                 variant={selectedCategory === "All" ? "primary" : "secondary"}
                 onClick={() => handleCategoryChange("All")}
               >
-                All
+                {t("all")}
               </Button>
               {categories.map((category) => (
                 <Button
