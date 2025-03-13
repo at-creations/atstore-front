@@ -55,8 +55,8 @@
   },
   "404Page": {
     "title": "404 - Trang không tìm thấy",
-    "message1": "Tiếc quá! Có vẻ như bạn đã lạc khỏi đường!",
-    "message2": "Đừng lo lắng! Dưới đây là cách để quay lại trang chính",
+    "message1": "Trang bạn đang tìm kiếm không tồn tại",
+    "message2": "Đừng lo lắng! Đây là cách để quay lại trang chính",
     "home": "Trang chủ",
     "products": "Sản phẩm"
   }
