@@ -28,10 +28,10 @@ const Custom404 = () => {
               />
               <div className="divider hidden md:block w-0.5 h-36 bg-white"></div>
               <div className="text max-w-md">
-                <h1 className="text-4xl font-bold mb-4">
+                <h1 className="text-3xl font-bold mb-4">
                   Oops! Looks like you&apos;ve wandered off the trail!
                 </h1>
-                <p className="text-xl mb-8">
+                <p className="text-lg mb-8">
                   Don&apos;t worry! Here&apos;s how you can get back on track
                 </p>
                 <div className="buttons flex md:flex-row gap-4 justify-center">

@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { ProductDetails } from "@/app/components/ProductDetails";
 import { fetchProductDetails } from "@/app/utils/api";
 import type { Product } from "@/app/types/api";
 import { slugify } from "@/app/utils/slugify";
 import { useLocale, useTranslations } from "next-intl";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
+import { Spinner } from "@/app/components/Spinner";
 
 export default function ProductPage() {
   const params = useParams();
@@ -52,15 +53,15 @@ export default function ProductPage() {
   }, [productId, slug, router]);
 
   if (isLoading) {
-    return <div className="container mx-auto px-4 py-8">Loading...</div>;
+    return (
+      <div className="container mx-auto flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
 
-  if (error) {
-    return <div className="container mx-auto px-4 py-8">Error: {error}</div>;
-  }
-
-  if (!product) {
-    return <div className="container mx-auto px-4 py-8">Product not found</div>;
+  if (error || !product) {
+    notFound();
   }
 
   const productName =
@@ -73,7 +74,7 @@ export default function ProductPage() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto">
       <Breadcrumbs items={breadcrumbsItems} />
       <ProductDetails product={product} locale={locale} />
     </div>

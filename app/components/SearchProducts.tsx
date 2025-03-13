@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ItemCard } from "./ItemCard";
 import TextField from "@mui/material/TextField";
 import Select, { SingleValue, StylesConfig } from "react-select";
@@ -43,8 +44,12 @@ export function SearchProducts() {
   const t = useTranslations("search");
   const t_error = useTranslations("error");
   const locale = useLocale();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
   const [selectedCategory, setSelectedCategory] = useState<Option | null>(null);
   const [sortBy, setSortBy] = useState<Option | null>(null);
   const [priceRange, setPriceRange] = useState<Option | null>(null);
@@ -53,15 +58,54 @@ export function SearchProducts() {
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = DEFAULT_PAGE_SIZE;
 
+  const categoryOptions = [
+    { value: "All", label: t("allCategories") },
+    ...categories.map((category) => ({
+      value: category._id,
+      label:
+        locale === "vi" && category.name_vi ? category.name_vi : category.name,
+    })),
+  ];
+
+  const sortByOptions = [
+    { value: "created_at-desc", label: t("default") },
+    { value: "name-asc", label: t("nameAsc") },
+    { value: "name-desc", label: t("nameDesc") },
+    { value: "price-asc", label: t("priceAsc") },
+    { value: "price-desc", label: t("priceDesc") },
+  ];
+
+  const priceRangeOptions = [
+    { value: "0-20000", label: t("allPrices") },
+    { value: "0-50", label: t("under") + " $50" },
+    { value: "50-100", label: "$50 - $100" },
+    { value: "100-250", label: "$100 - $250" },
+    { value: "250-20000", label: t("above") + " $250" },
+  ];
+
   useEffect(() => {
-    setSelectedCategory({ value: "All", label: t("allCategories") });
-    setSortBy({ value: "created_at-desc", label: t("default") });
-    setPriceRange({ value: "0-20000", label: t("allPrices") });
-  }, [t]);
+    setSelectedCategory(
+      categoryOptions.find(
+        (option) => option.value === searchParams.get("category")
+      ) || categoryOptions[0]
+    );
+    setSortBy(
+      sortByOptions.find(
+        (option) => option.value === searchParams.get("sort")
+      ) || sortByOptions[0]
+    );
+    setPriceRange(
+      priceRangeOptions.find(
+        (option) => option.value === searchParams.get("price")
+      ) || priceRangeOptions[0]
+    );
+  }, [t, categories]);
 
   useEffect(() => {
     async function loadCategories() {
@@ -89,8 +133,9 @@ export function SearchProducts() {
           "created_at",
           "desc",
         ];
-        
-        const updatedSortField = sortField === "name" && locale === "vi" ? "name_vi" : sortField;
+
+        const updatedSortField =
+          sortField === "name" && locale === "vi" ? "name_vi" : sortField;
 
         const offset = (currentPage - 1) * itemsPerPage;
         const fetchedProductsResponse = await fetchFilteredProducts(
@@ -111,11 +156,7 @@ export function SearchProducts() {
         }
         setError(null);
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : t_error("fetchFailed")
-        );
+        setError(err instanceof Error ? err.message : t_error("fetchFailed"));
       } finally {
         setIsLoadingProducts(false);
       }
@@ -130,10 +171,23 @@ export function SearchProducts() {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  const updateSearchParams = (params: Record<string, string>) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        newSearchParams.set(key, value);
+      } else {
+        newSearchParams.delete(key);
+      }
+    });
+    router.replace(`${window.location.pathname}?${newSearchParams.toString()}`);
+  };
+
   const handleCategoryChange = (selectedOption: SingleValue<Option>) => {
     if (selectedOption) {
       setSelectedCategory(selectedOption);
       setCurrentPage(1); // Reset to first page on filter change
+      updateSearchParams({ category: selectedOption.value, page: "1" });
     }
   };
 
@@ -141,6 +195,7 @@ export function SearchProducts() {
     if (selectedOption) {
       setSortBy(selectedOption);
       setCurrentPage(1); // Reset to first page on filter change
+      updateSearchParams({ sort: selectedOption.value, page: "1" });
     }
   };
 
@@ -148,11 +203,19 @@ export function SearchProducts() {
     if (selectedOption) {
       setPriceRange(selectedOption);
       setCurrentPage(1); // Reset to first page on filter change
+      updateSearchParams({ price: selectedOption.value, page: "1" });
     }
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    updateSearchParams({ page: page.toString() });
+  };
+
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on filter change
+    updateSearchParams({ search: e.target.value, page: "1" });
   };
 
   return (
@@ -165,7 +228,7 @@ export function SearchProducts() {
             variant="outlined"
             fullWidth
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchTermChange}
           />
         </div>
 
@@ -174,16 +237,7 @@ export function SearchProducts() {
             styles={customSelectStyles}
             value={selectedCategory}
             onChange={handleCategoryChange}
-            options={[
-              { value: "All", label: t("allCategories") },
-              ...categories.map((category) => ({
-                value: category._id,
-                label:
-                  locale === "vi" && category.name_vi
-                    ? category.name_vi
-                    : category.name,
-              })),
-            ]}
+            options={categoryOptions}
             isLoading={isLoadingCategories}
             isSearchable={false}
           />
@@ -194,13 +248,7 @@ export function SearchProducts() {
             styles={customSelectStyles}
             value={sortBy}
             onChange={handleSortByChange}
-            options={[
-              { value: "created_at-desc", label: t("default") },
-              { value: "name-asc", label: t("nameAsc") },
-              { value: "name-desc", label: t("nameDesc") },
-              { value: "price-asc", label: t("priceAsc") },
-              { value: "price-desc", label: t("priceDesc") },
-            ]}
+            options={sortByOptions}
             isSearchable={false}
           />
         </div>
@@ -210,13 +258,7 @@ export function SearchProducts() {
             styles={customSelectStyles}
             value={priceRange}
             onChange={handlePriceRangeChange}
-            options={[
-              { value: "0-20000", label: t("allPrices") },
-              { value: "0-50", label: t("under") + " $50" },
-              { value: "50-100", label: "$50 - $100" },
-              { value: "100-250", label: "$100 - $250" },
-              { value: "250-20000", label: t("above") + " $250" },
-            ]}
+            options={priceRangeOptions}
             isSearchable={false}
           />
         </div>

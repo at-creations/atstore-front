@@ -15,7 +15,9 @@ export default function LocaleSwitcher() {
 
   const switchLocale = (newLocale: string) => {
     startTransition(() => {
-      router.replace(pathname, { locale: newLocale });
+      const searchParams = window.location.search;
+      const newUrl = `${pathname}${searchParams}`;
+      router.replace(newUrl, { locale: newLocale });
     });
     setDropdownOpen(false);
   };
