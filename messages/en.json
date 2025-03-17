@@ -9,14 +9,17 @@
   },
   "home": {
     "welcome": "Welcome to AT Creations",
-    "tagline": "Discover unique and creative products",
+    "tagline": "Find your calm, ignite your creativity",
     "exploreButton": "Explore Our Collection"
   },
   "about": {
     "title": "About Us",
-    "paragraph1": "A.T Creations offers a curated collection of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life. Each piece is meticulously crafted by skilled artisans, reflecting the rich cultural heritage of our country. From delicate souvenirs and stylish accessories to thoughtful gifts and functional stationery, our shop has something for everyone.",
+    "paragraph1": "AT Creations offers a curated collection of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life. Each piece is meticulously crafted by skilled artisans, reflecting the rich cultural heritage of our country. From delicate souvenirs and stylish accessories to thoughtful gifts and functional stationery, our shop has something for everyone.",
     "paragraph2": "Beyond retail, A.T Creations provides a dedicated workshop space where creativity can flourish. Whether you're seeking a relaxing escape or a place to explore your artistic side, our workshop offers a serene environment for crafting and contemplation.",
-    "paragraph3": "Discover the beauty of handcrafted artistry at A.T Creations, your one-of-a-kind souvenir destination in Vancouver."
+    "paragraph3": "Discover the beauty of handcrafted artistry at A.T Creations, your one-of-a-kind souvenir destination in Vancouver.",
+    "established": "2025",
+    "quote": "AT Creations: Find your calm, ignite your creativity.",
+    "imageAlt": "AT Creations store Vancouver image"
   },
   "featuredProducts": {
     "title": "Featured Products",
@@ -39,6 +42,11 @@
   "search": {
     "title": "Search Products",
     "search": "Search",
+    "category": "Category",
+    "sortBy": "Sort By",
+    "priceRange": "Price Range",
+    "showing": "Showing",
+    "results": "results",
     "allCategories": "All Categories",
     "allPrices": "All Prices",
     "nameAsc": "Name (A-Z)",

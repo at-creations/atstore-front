@@ -71,12 +71,12 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   return (
-    <header className="bg-white shadow-md shadow-blue-900/30 fixed top-0 left-0 w-full z-10 dark:bg-gray-900">
+    <header className="bg-white shadow-md shadow-blue-900/30 fixed top-0 left-0 w-full z-30 dark:bg-gray-900">
       <div className="container mx-auto px-4">
-        {/* Use a three-column layout for perfect centering */}
-        <div className="grid grid-cols-3 items-center h-16">
-          {/* Logo on the left - column 1 */}
-          <div className="flex justify-start">
+        {/* Switch to flex layout on mobile, grid on desktop */}
+        <div className="flex md:grid md:grid-cols-3 items-center h-16 justify-between">
+          {/* Logo on the left */}
+          <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
               <Image
                 src={`${CDN_HOST}/data/blue_nav_logo.png`}
@@ -88,7 +88,7 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Navigation in the center - column 2 */}
+          {/* Navigation in the center - desktop only */}
           <div className="hidden md:flex justify-center">
             <nav>
               <ul className="flex space-x-8">
@@ -113,40 +113,33 @@ export default function Header() {
             </nav>
           </div>
 
-          {/* Right side with locale switcher - column 3 */}
-          <div className="flex justify-end items-center">
-            {/* Mobile navigation toggle */}
-            <div className="md:hidden flex items-center gap-4">
-              <LocaleSwitcher color="black" />
-              <button
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16m-7 6h7"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
-
-            {/* Desktop locale switcher */}
-            <div className="hidden md:block">
-              <LocaleSwitcher color="black" />
-            </div>
+          {/* Right side with locale switcher & mobile menu button */}
+          <div className="flex items-center justify-end gap-4">
+            {/* Mobile navigation toggle & locale switcher */}
+            <LocaleSwitcher color="black" />
+            <button
+              className="md:hidden text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
 

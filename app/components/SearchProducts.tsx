@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ItemCard } from "./ItemCard";
-import TextField from "@mui/material/TextField";
-import Select, { SingleValue, StylesConfig } from "react-select";
 import { SkeletonCard } from "./SkeletonCard";
 import Pagination from "./Pagination";
 import { fetchCategories, fetchFilteredProducts } from "@/app/utils/api";
@@ -12,33 +10,14 @@ import type { Category, Product } from "@/app/types/api";
 import { slugify } from "@/app/utils/slugify";
 import { DEFAULT_PAGE_SIZE } from "../constants";
 import { useLocale, useTranslations } from "next-intl";
+import { Search } from "lucide-react";
+import { Input } from "./ui/Input";
+import { Select } from "./ui/Select";
 
 interface Option {
   value: string;
   label: string;
 }
-
-const customSelectStyles: StylesConfig<Option, false> = {
-  control: (provided) => ({
-    ...provided,
-    height: "56px", // Match the height of the TextField
-    minHeight: "56px",
-  }),
-  valueContainer: (provided) => ({
-    ...provided,
-    height: "56px",
-    padding: "0 8px",
-  }),
-  input: (provided) => ({
-    ...provided,
-    margin: "0",
-    padding: "0",
-  }),
-  indicatorsContainer: (provided) => ({
-    ...provided,
-    height: "56px",
-  }),
-};
 
 export function SearchProducts() {
   const t = useTranslations("search");
@@ -163,8 +142,6 @@ export function SearchProducts() {
     }
 
     loadProducts();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage]);
 
   useEffect(() => {
@@ -183,26 +160,35 @@ export function SearchProducts() {
     router.replace(`${window.location.pathname}?${newSearchParams.toString()}`);
   };
 
-  const handleCategoryChange = (selectedOption: SingleValue<Option>) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = categoryOptions.find(
+      (option) => option.value === e.target.value
+    );
     if (selectedOption) {
       setSelectedCategory(selectedOption);
-      setCurrentPage(1); // Reset to first page on filter change
+      setCurrentPage(1);
       updateSearchParams({ category: selectedOption.value, page: "1" });
     }
   };
 
-  const handleSortByChange = (selectedOption: SingleValue<Option>) => {
+  const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = sortByOptions.find(
+      (option) => option.value === e.target.value
+    );
     if (selectedOption) {
       setSortBy(selectedOption);
-      setCurrentPage(1); // Reset to first page on filter change
+      setCurrentPage(1);
       updateSearchParams({ sort: selectedOption.value, page: "1" });
     }
   };
 
-  const handlePriceRangeChange = (selectedOption: SingleValue<Option>) => {
+  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = priceRangeOptions.find(
+      (option) => option.value === e.target.value
+    );
     if (selectedOption) {
       setPriceRange(selectedOption);
-      setCurrentPage(1); // Reset to first page on filter change
+      setCurrentPage(1);
       updateSearchParams({ price: selectedOption.value, page: "1" });
     }
   };
@@ -214,66 +200,88 @@ export function SearchProducts() {
 
   const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
     updateSearchParams({ search: e.target.value, page: "1" });
   };
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
-      <div className="mb-8 p-4 border rounded-lg space-y-4 md:space-y-0 md:flex md:space-x-4">
-        <div className="flex-1">
-          <TextField
+    <div className="max-w-7xl mx-auto">
+      <form onSubmit={handleSearchSubmit}>
+        <div className="mb-10 space-y-6">
+          {/* Search input using the new Input component */}
+          <Input
+            type="search"
             id="search"
-            label={t("search")}
-            variant="outlined"
-            fullWidth
+            placeholder={t("search")}
             value={searchTerm}
             onChange={handleSearchTermChange}
+            icon={<Search className="h-5 w-5" />}
           />
+
+          {/* Filter controls using the new Select component */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Select
+              id="category"
+              label={t("category")}
+              value={selectedCategory?.value || "All"}
+              onChange={handleCategoryChange}
+              options={categoryOptions}
+              disabled={isLoadingCategories}
+            />
+
+            <Select
+              id="sortBy"
+              label={t("sortBy")}
+              value={sortBy?.value || "created_at-desc"}
+              onChange={handleSortByChange}
+              options={sortByOptions}
+            />
+
+            <Select
+              id="priceRange"
+              label={t("priceRange")}
+              value={priceRange?.value || "0-20000"}
+              onChange={handlePriceRangeChange}
+              options={priceRangeOptions}
+            />
+          </div>
         </div>
+      </form>
 
-        <div className="flex-1">
-          <Select
-            styles={customSelectStyles}
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            options={categoryOptions}
-            isLoading={isLoadingCategories}
-            isSearchable={false}
-          />
+      {/* Error message */}
+      {error && (
+        <div className="mb-8 p-4 bg-red-50 border border-red-200 text-red-500 rounded-md">
+          {error}
         </div>
+      )}
 
-        <div className="flex-1">
-          <Select
-            styles={customSelectStyles}
-            value={sortBy}
-            onChange={handleSortByChange}
-            options={sortByOptions}
-            isSearchable={false}
-          />
+      {/* Results count */}
+      {!isLoadingProducts && (
+        <div className="mb-6 text-gray-500 dark:text-gray-400">
+          <p className="text-sm">
+            {products.length > 0
+              ? `${t("showing")} ${products.length} ${
+                  products.length === 1 ? t("result") : t("results")
+                }`
+              : ""}
+          </p>
         </div>
+      )}
 
-        <div className="flex-1">
-          <Select
-            styles={customSelectStyles}
-            value={priceRange}
-            onChange={handlePriceRangeChange}
-            options={priceRangeOptions}
-            isSearchable={false}
-          />
-        </div>
-      </div>
-
-      {error && <div className="text-red-500 mb-4">{error}</div>}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {/* Product grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {isLoadingProducts ? (
           Array.from({ length: itemsPerPage }).map((_, index) => (
             <SkeletonCard key={index} />
           ))
         ) : products.length === 0 ? (
-          <div className="col-span-4 text-center text-gray-500">
-            {t("noResults")}
+          <div className="col-span-full py-16 text-center">
+            <p className="text-gray-400 text-lg">{t("noResults")}</p>
+            <p className="text-gray-400 mt-2">{t("tryAdjustingFilters")}</p>
           </div>
         ) : (
           products.map((product) => (
@@ -287,11 +295,16 @@ export function SearchProducts() {
         )}
       </div>
 
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="mt-12">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 }
