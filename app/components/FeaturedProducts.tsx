@@ -69,11 +69,8 @@ export function FeaturedProducts() {
 
   return (
     <section className="py-20 px-4 sm:px-6 md:px-10 relative">
-      {/* Decorative background elements */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-100 dark:bg-blue-900/20 rounded-full opacity-40 blur-3xl"></div>
-      <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-blue-100 dark:bg-blue-900/20 rounded-full opacity-40 blur-3xl"></div>
 
-      <div className="relative">
+      <div className="relative container max-w-6xl mx-auto">
         <SectionTitle title={t("title")} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 stagger-animation">

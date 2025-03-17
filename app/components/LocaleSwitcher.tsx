@@ -3,7 +3,7 @@
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useState, useTransition, useEffect, useRef } from "react";
-import { Globe } from "lucide-react";
+import { Globe, ChevronDown } from "lucide-react";
 
 interface LocaleSwitcherProps {
   color?: "blue" | "white" | "gray" | "black";
@@ -46,91 +46,90 @@ export default function LocaleSwitcher({
     };
   }, []);
 
-  // Color maps for text and hover states
+  // Enhanced color maps with refined styling
   const colorMap = {
     blue: {
-      text: "text-blue-600",
-      hover: "hover:text-blue-800",
-      dropdown: "text-blue-600",
+      btn: "bg-blue-800 text-white hover:bg-blue-600",
+      activeIndicator: "bg-white",
+      dropdown: "border-blue-800 shadow-blue-900/30",
+      icon: "text-blue-100",
     },
     white: {
-      text: "text-white",
-      hover: "hover:text-gray-200",
-      dropdown: "text-blue-600",
+      btn: "bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm",
+      activeIndicator: "bg-white",
+      dropdown: "border-gray-100 shadow-gray-100/20",
+      icon: "text-white",
     },
     gray: {
-      text: "text-gray-700",
-      hover: "hover:text-gray-900",
-      dropdown: "text-gray-700",
+      btn: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+      activeIndicator: "bg-gray-600",
+      dropdown: "border-gray-100 shadow-gray-100/20",
+      icon: "text-gray-500",
     },
     black: {
-      text: "text-black",
-      hover: "hover:text-gray-700",
-      dropdown: "text-black",
+      btn: "bg-gray-800 text-white hover:bg-gray-700",
+      activeIndicator: "bg-white",
+      dropdown: "border-gray-100 shadow-gray-100/20",
+      icon: "text-gray-400",
     },
   };
 
-  const { text, hover, dropdown } = colorMap[color];
+  const { btn, activeIndicator, dropdown, icon } = colorMap[color];
+
+  // Define the languages
+  const languages = [
+    { code: "en", name: "English", flag: "/icons/ca.svg" },
+    { code: "vi", name: "Tiếng Việt", flag: "/icons/vi.svg" },
+  ];
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
-        className={`flex items-center ${text} ${hover} transition-colors duration-200`}
+        className={`flex items-center gap-2 rounded-full py-1.5 px-3 transition-all duration-300 ${btn} ${
+          isPending ? "opacity-70" : ""
+        }`}
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
         aria-label="Switch language"
+        disabled={isPending}
       >
-        <Globe className="w-5 h-5 mr-1" />
-        <span className="hidden sm:inline">{locale.toUpperCase()}</span>
-        <svg
-          className={`w-4 h-4 ml-1 transition-transform ${
+        <Globe className={`w-4 h-4 ${icon}`} aria-hidden="true" />
+        <span className="font-medium text-sm">{locale.toUpperCase()}</span>
+        <ChevronDown
+          className={`w-3.5 h-3.5 transition-transform duration-300 ${icon} ${
             dropdownOpen ? "rotate-180" : ""
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
+        />
       </button>
 
       {dropdownOpen && (
-        <div className="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-          <button
-            className={`flex items-center w-full ${dropdown} px-4 py-2 text-sm ${
-              locale === "en"
-                ? "font-bold bg-gray-50 border-l-2 border-blue-600"
-                : "hover:bg-gray-100"
-            }`}
-            onClick={() => switchLocale("en")}
-            disabled={isPending}
-          >
-            <img src="/icons/ca.svg" className="h-4 w-4 mr-2" alt="English" />
-            <span>English</span>
-          </button>
-          <button
-            className={`flex items-center w-full ${dropdown} px-4 py-2 text-sm ${
-              locale === "vi"
-                ? "font-bold bg-gray-50 border-l-2 border-blue-600"
-                : "hover:bg-gray-100"
-            }`}
-            onClick={() => switchLocale("vi")}
-            disabled={isPending}
-          >
-            <img
-              src="/icons/vi.svg"
-              className="h-4 w-4 mr-2"
-              alt="Vietnamese"
-            />
-            <span>Tiếng Việt</span>
-          </button>
+        <div
+          className={`absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg z-10 border ${dropdown} animate-fadeIn`}
+        >
+          <div className="py-1">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                className={`flex items-center w-full px-4 py-2.5 text-sm transition-colors ${
+                  locale === lang.code
+                    ? `font-medium relative ${
+                        dropdownOpen ? "bg-gray-100 dark:bg-gray-700/50 border-l-2 border-blue-600" : ""
+                      }`
+                    : "hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
+                }`}
+                onClick={() => switchLocale(lang.code)}
+                disabled={isPending}
+              >
+                <img
+                  src={lang.flag}
+                  className="h-4 w-4 mr-3 object-cover rounded-sm"
+                  alt={lang.name}
+                />
+                <span>{lang.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

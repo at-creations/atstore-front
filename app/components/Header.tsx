@@ -116,7 +116,7 @@ export default function Header() {
           {/* Right side with locale switcher & mobile menu button */}
           <div className="flex items-center justify-end gap-4">
             {/* Mobile navigation toggle & locale switcher */}
-            <LocaleSwitcher color="black" />
+            <LocaleSwitcher color="blue" />
             <button
               className="md:hidden text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}

@@ -6,7 +6,7 @@ export function AboutUs() {
   const t = useTranslations("about");
 
   return (
-    <section className="py-24 px-4 sm:px-6 md:px-10 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 animate-fadeIn">
+    <section className="py-24 px-4 sm:px-6 md:px-10 animate-fadeIn">
       <div className="container max-w-6xl mx-auto">
         {/* Using the new SectionTitle component */}
         <SectionTitle title={t("title")} />
@@ -40,7 +40,7 @@ export function AboutUs() {
           <div className="lg:col-span-5 order-1 lg:order-2">
             <div className="relative">
               {/* Main image with decorative elements */}
-              <div className="relative z-[6] rounded-lg overflow-hidden shadow-xl transform transition-transform duration-300 hover:scale-[1.02]">
+              <div className="relative z-[6] rounded-[8px] overflow-hidden shadow-xl transform transition-transform duration-300 hover:scale-[1.02]">
                 {/* Mobile image */}
                 <img
                   src={`${CDN_HOST}/data/about_row.jpg`}
@@ -52,12 +52,12 @@ export function AboutUs() {
                 <img
                   src={`${CDN_HOST}/data/about_col.jpg`}
                   alt={t("imageAlt")}
-                  className="w-full h-auto aspect-[3/4] object-cover rounded-lg hidden lg:block"
+                  className="w-full h-auto aspect-[3/4] object-cover rounded-[8px] hidden lg:block"
                 />
               </div>
 
               {/* Decorative background element */}
-              <div className="absolute -bottom-4 -right-4 w-full h-full bg-blue-100 dark:bg-blue-900/30 rounded-lg z-[5]"></div>
+              <div className="absolute -bottom-4 -right-4 w-full h-full bg-blue-100 dark:bg-blue-900/30 rounded-[8px] z-[5]"></div>
 
               {/* Optional floating badge or highlight */}
               <div className="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-lg z-[7] hidden lg:block">

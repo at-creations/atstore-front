@@ -75,7 +75,6 @@ export default function ProductPage() {
 
   return (
     <div className="container mx-auto">
-      <Breadcrumbs items={breadcrumbsItems} />
       <ProductDetails product={product} locale={locale} />
     </div>
   );

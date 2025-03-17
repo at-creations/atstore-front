@@ -11,6 +11,10 @@ export interface Product {
   images: string[]
   thumbnail: string
   categories: Category[] | null
+  featured: boolean
+  sku?: string
+  discount?: number
+  isNew: boolean
 }
 
 export interface Category {
