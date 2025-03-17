@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ItemCard } from "./ItemCard";
-import { Button } from "./ui/Button";
 import { CategoryButton } from "./ui/CategoryButton";
 import Pagination from "./Pagination";
 import { fetchCategories, fetchProductsByCategory } from "../utils/api";
@@ -17,8 +16,6 @@ import {
   Grid3x3,
   Loader2,
   Globe,
-  TagIcon,
-  LayersIcon,
 } from "lucide-react";
 
 export function ProductList() {

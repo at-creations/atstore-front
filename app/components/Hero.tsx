@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { CDN_HOST } from "../constants";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export function Hero() {
   const t = useTranslations("home");
@@ -13,14 +14,20 @@ export function Hero() {
 
       {/* Full screen hero image with parallax effect */}
       <div className="absolute inset-0 w-full h-full">
-        <img
-          src={`${CDN_HOST}/data/hero.jpg`}
-          alt="Hero background"
-          className="w-full h-full object-cover transition-transform duration-1000 scale-110 animate-subtle-zoom"
-        />
+        <div className="relative w-full h-full">
+          <Image
+            src={`${CDN_HOST}/data/hero.jpg`}
+            alt="Hero background"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover transition-transform duration-1000 scale-110 animate-subtle-zoom"
+            style={{ objectFit: "cover" }}
+          />
 
-        {/* Semi-transparent overlay with pattern */}
-        <div className="absolute inset-0 bg-black/50 mix-blend-multiply"></div>
+          {/* Semi-transparent overlay with pattern */}
+          <div className="absolute inset-0 bg-black/50 mix-blend-multiply"></div>
+        </div>
       </div>
 
       {/* Content container */}
@@ -30,11 +37,16 @@ export function Hero() {
           <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/10 via-white/30 to-blue-500/10 rounded-full blur-2xl animate-pulse-slow"></div>
 
           {/* Main logo with enhanced animation */}
-          <img
-            src={`${CDN_HOST}/data/white_long_shadow.png`}
-            alt="Company logo"
-            className="relative h-36 sm:h-52 md:h-64 max-w-full animate-fadeIn animate-float"
-          />
+          <div className="relative h-36 sm:h-52 md:h-64">
+            <Image
+              src={`${CDN_HOST}/data/white_long_shadow.png`}
+              alt="Company logo"
+              width={1200}
+              height={435}
+              priority
+              className="h-full w-auto animate-fadeIn animate-float"
+            />
+          </div>
         </div>
 
         {/* Tagline */}

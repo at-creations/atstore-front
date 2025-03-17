@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import "@/app/globals.css";

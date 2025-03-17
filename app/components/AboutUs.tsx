@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { CDN_HOST } from "../constants";
 import { SectionTitle } from "./ui/SectionTitle";
 
@@ -15,7 +16,7 @@ export function AboutUs() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Text content - takes 7/12 width on desktop */}
           <div className="lg:col-span-7 order-2 lg:order-1">
-            <div className="space-y-6 relative">
+            <div className="space-y-6 relative text-justify">
               {/* Decorative element */}
               <div className="absolute -left-6 top-0 w-1 h-24 bg-blue-400 rounded-full hidden lg:block"></div>
 
@@ -42,18 +43,28 @@ export function AboutUs() {
               {/* Main image with decorative elements */}
               <div className="relative z-[6] rounded-[8px] overflow-hidden shadow-xl transform transition-transform duration-300 hover:scale-[1.02]">
                 {/* Mobile image */}
-                <img
-                  src={`${CDN_HOST}/data/about_row.jpg`}
-                  alt={t("imageAlt")}
-                  className="w-full h-auto object-cover rounded-lg lg:hidden"
-                />
+                <div className="lg:hidden">
+                  <Image
+                    src={`${CDN_HOST}/data/about_row.jpg`}
+                    alt={t("imageAlt")}
+                    width={1276}
+                    height={956}
+                    className="w-full h-auto object-cover rounded-lg"
+                    priority={true}
+                  />
+                </div>
 
                 {/* Desktop image */}
-                <img
-                  src={`${CDN_HOST}/data/about_col.jpg`}
-                  alt={t("imageAlt")}
-                  className="w-full h-auto aspect-[3/4] object-cover rounded-[8px] hidden lg:block"
-                />
+                <div className="hidden lg:block">
+                  <Image
+                    src={`${CDN_HOST}/data/about_col.jpg`}
+                    alt={t("imageAlt")}
+                    width={765}
+                    height={956}
+                    className="w-full h-auto aspect-[4/5] object-cover rounded-[8px]"
+                    priority={true}
+                  />
+                </div>
               </div>
 
               {/* Decorative background element */}

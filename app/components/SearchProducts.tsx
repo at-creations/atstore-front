@@ -85,6 +85,7 @@ export function SearchProducts() {
         (option) => option.value === searchParams.get("price")
       ) || priceRangeOptions[0]
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t, categories]);
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export function SearchProducts() {
     }
 
     loadCategories();
-  }, []);
+  }, [t_error]);
 
   useEffect(() => {
     async function loadProducts() {
@@ -144,7 +145,7 @@ export function SearchProducts() {
     }
 
     loadProducts();
-  }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage]);
+  }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage, locale, t_error, itemsPerPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

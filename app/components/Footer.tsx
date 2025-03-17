@@ -2,10 +2,6 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
   Mail,
   MapPin,
   Phone,
@@ -103,22 +99,6 @@ export default function Footer() {
                   {t("termsOfService")}
                 </Link>
               </li>
-              {/* <li>
-                <Link
-                  href="/refund-policy"
-                  className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                >
-                  {t("refundPolicy")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/shipping-policy"
-                  className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                >
-                  {t("shippingPolicy")}
-                </Link>
-              </li> */}
             </ul>
           </div>
 

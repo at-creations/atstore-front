@@ -4,6 +4,7 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useState, useTransition, useEffect, useRef } from "react";
 import { Globe, ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 interface LocaleSwitcherProps {
   color?: "blue" | "white" | "gray" | "black";
@@ -50,31 +51,27 @@ export default function LocaleSwitcher({
   const colorMap = {
     blue: {
       btn: "bg-blue-800 text-white hover:bg-blue-600",
-      activeIndicator: "bg-white",
       dropdown: "border-blue-800 shadow-blue-900/30",
       icon: "text-blue-100",
     },
     white: {
       btn: "bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm",
-      activeIndicator: "bg-white",
       dropdown: "border-gray-100 shadow-gray-100/20",
       icon: "text-white",
     },
     gray: {
       btn: "bg-gray-100 text-gray-700 hover:bg-gray-200",
-      activeIndicator: "bg-gray-600",
       dropdown: "border-gray-100 shadow-gray-100/20",
       icon: "text-gray-500",
     },
     black: {
       btn: "bg-gray-800 text-white hover:bg-gray-700",
-      activeIndicator: "bg-white",
       dropdown: "border-gray-100 shadow-gray-100/20",
       icon: "text-gray-400",
     },
   };
 
-  const { btn, activeIndicator, dropdown, icon } = colorMap[color];
+  const { btn, dropdown, icon } = colorMap[color];
 
   // Define the languages
   const languages = [
@@ -114,18 +111,24 @@ export default function LocaleSwitcher({
                 className={`flex items-center w-full px-4 py-2.5 text-sm transition-colors ${
                   locale === lang.code
                     ? `font-medium relative ${
-                        dropdownOpen ? "bg-gray-100 dark:bg-gray-700/50 border-l-2 border-blue-600" : ""
+                        dropdownOpen
+                          ? "bg-gray-100 dark:bg-gray-700/50 border-l-2 border-blue-600"
+                          : ""
                       }`
                     : "hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
                 }`}
                 onClick={() => switchLocale(lang.code)}
                 disabled={isPending}
               >
-                <img
-                  src={lang.flag}
-                  className="h-4 w-4 mr-3 object-cover rounded-sm"
-                  alt={lang.name}
-                />
+                <div className="h-4 w-4 mr-3 relative">
+                  <Image
+                    src={lang.flag}
+                    alt={lang.name}
+                    fill
+                    sizes="16px"
+                    className="object-cover rounded-sm"
+                  />
+                </div>
                 <span>{lang.name}</span>
               </button>
             ))}
