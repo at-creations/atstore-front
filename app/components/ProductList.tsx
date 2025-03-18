@@ -11,12 +11,7 @@ import { SkeletonCard } from "./SkeletonCard";
 import { slugify } from "../utils/slugify";
 import { DEFAULT_PAGE_SIZE } from "@/app/constants";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  Filter,
-  Grid3x3,
-  Loader2,
-  Globe,
-} from "lucide-react";
+import { Filter, Grid3x3, Loader2, Globe } from "lucide-react";
 
 export function ProductList() {
   const searchParams = useSearchParams();
@@ -119,7 +114,7 @@ export function ProductList() {
 
   return (
     <div className="animate-fadeIn">
-      {/* Filter section with improved styling */}
+      {/* Filter section */}
       <div className="mb-10 bg-white dark:bg-gray-800/80 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
         <div className="flex items-center gap-3 mb-5">
           <Filter className="h-5 w-5 text-blue-500 dark:text-blue-400" />
@@ -178,30 +173,32 @@ export function ProductList() {
         )}
       </div>
 
-      {/* Product grid with improved styling */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 stagger-animation">
-        {isLoading ? (
-          Array.from({ length: itemsPerPage }).map((_, index) => (
+      {/* Product grid */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          {Array.from({ length: itemsPerPage }).map((_, index) => (
             <SkeletonCard key={index} />
-          ))
-        ) : products.length === 0 ? (
-          <div className="col-span-full py-16 text-center text-gray-500 dark:text-gray-400">
-            <p className="text-lg mb-2">{t("noProducts")}</p>
-            <p>{t("tryOtherCategories")}</p>
-          </div>
-        ) : (
-          products.map((product) => (
+          ))}
+        </div>
+      ) : products.length === 0 ? (
+        <div className="col-span-full py-16 text-center text-gray-500 dark:text-gray-400">
+          <p className="text-lg mb-2">{t("noProducts")}</p>
+          <p>{t("tryOtherCategories")}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 stagger-animation">
+          {products.map((product) => (
             <ItemCard
               key={product._id}
               product={product}
               slug={slugify(product.name)}
               locale={locale}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* Pagination with improved styling */}
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-16">
           <Pagination

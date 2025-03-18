@@ -10,7 +10,13 @@ import type { Category, Product } from "@/app/types/api";
 import { slugify } from "@/app/utils/slugify";
 import { DEFAULT_PAGE_SIZE } from "../constants";
 import { useLocale, useTranslations } from "next-intl";
-import { Search, Filter, SlidersHorizontal, TagsIcon, Grid3X3 } from "lucide-react";
+import {
+  Search,
+  Filter,
+  SlidersHorizontal,
+  TagsIcon,
+  Grid3X3,
+} from "lucide-react";
 import { Input } from "./ui/Input";
 import { Select } from "./ui/Select";
 
@@ -145,7 +151,16 @@ export function SearchProducts() {
     }
 
     loadProducts();
-  }, [searchTerm, selectedCategory, sortBy, priceRange, currentPage, locale, t_error, itemsPerPage]);
+  }, [
+    searchTerm,
+    selectedCategory,
+    sortBy,
+    priceRange,
+    currentPage,
+    locale,
+    t_error,
+    itemsPerPage,
+  ]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -216,7 +231,7 @@ export function SearchProducts() {
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800/50 dark:to-indigo-900/30 rounded-2xl p-6 mb-8 shadow-sm">
         <form onSubmit={handleSearchSubmit} className="space-y-6">
           <div className="max-w-3xl mx-auto">
-            {/* Search input with enhanced styling */}
+            {/* Search input */}
             <Input
               type="search"
               id="search"
@@ -228,7 +243,7 @@ export function SearchProducts() {
             />
           </div>
 
-          {/* Filter section with better organization */}
+          {/* Filter section */}
           <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6">
             <div className="flex items-center gap-2 mb-4">
               <Filter className="h-4 w-4 text-blue-600 dark:text-blue-400" />
@@ -237,7 +252,7 @@ export function SearchProducts() {
               </h3>
             </div>
 
-            {/* Filter controls with improved grid layout */}
+            {/* Filter controls */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="flex flex-col space-y-1">
                 <div className="flex items-center gap-2 mb-1">
@@ -291,7 +306,7 @@ export function SearchProducts() {
         </form>
       </div>
 
-      {/* Error message with improved styling */}
+      {/* Error message */}
       {error && (
         <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-xl text-center max-w-xl mx-auto">
           <p className="text-sm font-medium">{error}</p>
@@ -316,37 +331,39 @@ export function SearchProducts() {
         )}
       </div>
 
-      {/* Product grid with staggered animation */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 stagger-animation">
-        {isLoadingProducts ? (
-          Array.from({ length: itemsPerPage }).map((_, index) => (
+      {/* Product grid with conditional stagger animation */}
+      {isLoadingProducts ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+          {Array.from({ length: itemsPerPage }).map((_, index) => (
             <SkeletonCard key={index} />
-          ))
-        ) : products.length === 0 ? (
-          <div className="col-span-full py-16 text-center bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-            <div className="flex justify-center mb-4">
-              <Search className="h-12 w-12 text-gray-300 dark:text-gray-600" />
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-lg font-medium mb-2">
-              {t("noResults")}
-            </p>
-            <p className="text-gray-400 dark:text-gray-500">
-              {t("tryAdjustingFilters")}
-            </p>
+          ))}
+        </div>
+      ) : products.length === 0 ? (
+        <div className="col-span-full py-16 text-center bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+          <div className="flex justify-center mb-4">
+            <Search className="h-12 w-12 text-gray-300 dark:text-gray-600" />
           </div>
-        ) : (
-          products.map((product) => (
+          <p className="text-gray-600 dark:text-gray-300 text-lg font-medium mb-2">
+            {t("noResults")}
+          </p>
+          <p className="text-gray-400 dark:text-gray-500">
+            {t("tryAdjustingFilters")}
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 stagger-animation">
+          {products.map((product) => (
             <ItemCard
               key={product._id}
               product={product}
               slug={slugify(product.name)}
               locale={locale}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* Pagination with better positioning */}
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-12 flex justify-center">
           <Pagination
