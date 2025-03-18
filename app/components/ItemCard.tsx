@@ -38,7 +38,7 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
           {product.featured && (
             <div className="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-md z-20 shadow-md flex items-center">
               <Star className="h-3 w-3 mr-1" fill="white" />{" "}
-              {locale === "vi" ? "Đặc sắc" : "Featured"}
+              {locale === "vi" ? "Nổi bật" : "Featured"}
             </div>
           )}
         </div>

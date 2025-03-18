@@ -36,21 +36,23 @@ export function FeaturedProducts() {
   if (isLoading) {
     return (
       <section className="py-20 px-4 sm:px-6 md:px-10">
-        <SectionTitle title={t("title")} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="animate-pulse bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700"
-            >
-              <div className="bg-gray-200 dark:bg-gray-700 h-64 rounded-t-xl"></div>
-              <div className="p-5">
-                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 mb-3"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-1/2 mb-2"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-2/3 mt-4"></div>
+        <div className="relative container max-w-6xl mx-auto">
+          <SectionTitle title={t("title")} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="animate-pulse bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700"
+              >
+                <div className="bg-gray-200 dark:bg-gray-700 h-64 rounded-t-xl"></div>
+                <div className="p-5">
+                  <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 mb-3"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-1/2 mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-2/3 mt-4"></div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     );

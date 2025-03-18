@@ -23,8 +23,24 @@ export function ProductDetails({
   const hasDiscount =
     product.discount && product.discount > 0 && product.discount < 100;
   const discountedPrice = hasDiscount
-    ? parseFloat((product.price * (1 - (product.discount ?? 0) / 100)).toFixed(2))
+    ? parseFloat(
+        (product.price * (1 - (product.discount ?? 0) / 100)).toFixed(2)
+      )
     : null;
+
+  // Determine if product is new (created within the last 30 days)
+  const isProductNew = () => {
+    if (!product.created_at) return false;
+
+    const creationDate = new Date(product.created_at);
+    const today = new Date();
+    const differenceInTime = today.getTime() - creationDate.getTime();
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+    return differenceInDays <= 30;
+  };
+
+  const isNew = isProductNew();
 
   // Breadcrumb items
   const breadcrumbItems = [
@@ -57,7 +73,7 @@ export function ProductDetails({
                     {locale === "vi" ? "Nổi bật" : "Featured"}
                   </span>
                 )}
-                {product.isNew && (
+                {isNew && (
                   <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-md dark:bg-green-900/30 dark:text-green-300">
                     <Check className="w-3.5 h-3.5 mr-1" />{" "}
                     {locale === "vi" ? "Mới" : "New"}
@@ -157,12 +173,12 @@ export function ProductDetails({
                   </span>
                 </div>
               )}
-              {product.sku && (
+              {product._id && (
                 <div>
                   <span className="font-medium">
                     {locale === "vi" ? "Mã SP" : "SKU"}:
                   </span>{" "}
-                  {product.sku}
+                  {product._id}
                 </div>
               )}
             </div>
