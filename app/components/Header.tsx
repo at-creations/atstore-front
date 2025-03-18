@@ -32,8 +32,8 @@ export default function Header() {
   // Close mobile menu when screen size changes to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        // md breakpoint
+      if (window.innerWidth >= 1024) {
+        // lg breakpoint
         setMobileMenuOpen(false);
       }
     };
@@ -73,8 +73,8 @@ export default function Header() {
   return (
     <header className="bg-white shadow-md shadow-blue-900/30 fixed top-0 left-0 w-full z-30 dark:bg-gray-900">
       <div className="container mx-auto px-4">
-        {/* Switch to flex layout on mobile, grid on desktop */}
-        <div className="flex md:grid md:grid-cols-3 items-center h-16 justify-between">
+        {/* Switch to flex layout on mobile and tablet, grid on desktop (lg) */}
+        <div className="flex lg:grid lg:grid-cols-3 items-center h-16 justify-between">
           {/* Logo on the left */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
@@ -88,28 +88,28 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Navigation in the center - desktop only */}
-          <div className="hidden md:flex justify-center">
-            <nav>
-              <ul className="flex space-x-2">
+          {/* Navigation in the center - desktop only (lg and up) */}
+          <div className="hidden lg:flex justify-center">
+            <nav className="flex-1 max-w-md">
+              <ul className="flex justify-between w-full">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
                   const IconComponent = item.icon;
                   return (
-                    <li key={item.name}>
+                    <li key={item.name} className="whitespace-nowrap">
                       <Link
                         href={item.href}
-                        className={`flex items-center px-3 py-2 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium transition-colors duration-200 ${
+                        className={`flex items-center px-2.5 py-2 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium transition-colors duration-200 ${
                           active
                             ? "border-b-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400"
                             : ""
                         }`}
                       >
                         <IconComponent
-                          className="h-4 w-4 mr-1.5"
+                          className="h-4 w-4 mr-1.5 flex-shrink-0"
                           aria-hidden="true"
                         />
-                        <span>{item.name}</span>
+                        <span className="truncate">{item.name}</span>
                       </Link>
                     </li>
                   );
@@ -123,7 +123,7 @@ export default function Header() {
             {/* Mobile navigation toggle & locale switcher */}
             <LocaleSwitcher color="blue" />
             <button
-              className="md:hidden text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
@@ -148,10 +148,10 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile navigation menu with animations */}
+        {/* Mobile navigation menu with animations - show on smaller than lg screens */}
         <div
           ref={mobileMenuRef}
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
             !mobileMenuOpen
               ? "invisible"
               : "visible border-t border-gray-200 dark:border-gray-800"
@@ -174,7 +174,7 @@ export default function Header() {
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <IconComponent className="h-5 w-5 mr-3" />
+                    <IconComponent className="h-5 w-5 mr-3 flex-shrink-0" />
                     <span>{item.name}</span>
                   </Link>
                 );
