@@ -91,9 +91,10 @@ export default function Header() {
           {/* Navigation in the center - desktop only */}
           <div className="hidden md:flex justify-center">
             <nav>
-              <ul className="flex space-x-8">
+              <ul className="flex space-x-2">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
+                  const IconComponent = item.icon;
                   return (
                     <li key={item.name}>
                       <Link
@@ -104,6 +105,10 @@ export default function Header() {
                             : ""
                         }`}
                       >
+                        <IconComponent
+                          className="h-4 w-4 mr-1.5"
+                          aria-hidden="true"
+                        />
                         <span>{item.name}</span>
                       </Link>
                     </li>
@@ -157,6 +162,7 @@ export default function Header() {
             <nav className="flex flex-col space-y-2">
               {navItems.map((item) => {
                 const active = isActive(item.href);
+                const IconComponent = item.icon;
                 return (
                   <Link
                     key={item.name}
@@ -168,7 +174,7 @@ export default function Header() {
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <item.icon className="h-5 w-5 mr-3" />
+                    <IconComponent className="h-5 w-5 mr-3" />
                     <span>{item.name}</span>
                   </Link>
                 );
