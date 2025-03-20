@@ -113,8 +113,8 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
               <Image
                 src={image}
                 alt={`${productName} - Image ${index + 1}`}
-                layout="fill"
-                objectFit="contain"
+                fill
+                style={{ objectFit: "contain" }}
                 className="transition-transform duration-300 group-hover:scale-[1.02]"
                 placeholder="blur"
                 blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gMjAgMCBMIDAgMCAwIDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiNlMmU4ZjAiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4="
@@ -158,7 +158,7 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
 
       {/* Enhanced thumbnails with better styling */}
       {imagesToShow.length > 1 && (
-        <div className="flex justify-center gap-3 overflow-x-auto pb-2 snap-x scrollbar-hide">
+        <div className="flex justify-center py-2 gap-3 overflow-x-auto pb-2 snap-x scrollbar-hide">
           {imagesToShow.map((image, index) => (
             <CarouselButton
               key={index}

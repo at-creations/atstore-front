@@ -4,6 +4,7 @@
     "products": "Products",
     "search": "Search",
     "about": "About Us",
+    "workshops": "Workshops",
     "contact": "Contact Us",
     "promo": "Promotions"
   },
@@ -90,6 +91,46 @@
     "of": "of",
     "results": "results",
     "result": "result"
+  },
+  "workshops": {
+    "introduction": "Discover our range of creative workshops designed to inspire and engage participants of all ages. Each workshop offers a unique opportunity to learn new skills and express your creativity in a supportive environment.",
+    "learnMore": "Learn More",
+    "plaster-painting": {
+      "title": "Creative Plaster Painting Workshop",
+      "summary": "Unleash your inner artist at our plaster painting workshop! Enjoy a relaxing and creative experience, choosing from a variety of plaster figurines to paint and personalize. Perfect for all ages and skill levels, it's a fun way to de-stress and create unique masterpieces.",
+      "welcome":{
+        "heading": "Welcome to our Creative Plaster Painting Workshop!",
+        "message": "Are you looking for a space to relax, relieve stress, and unleash your creativity? Come join our plaster painting workshop, where you can express your personality and talent through blank plaster figurines."
+      },
+      "provideHeading": "Here, we provide:",
+      "offerings": {
+        "figurines": "Hundreds of diverse plaster figurine designs, from adorable cartoon characters to unique abstract shapes.",
+        "paints": "High-quality acrylic paints, safe for all ages.",
+        "tools": "Paintbrushes, color palettes, and all necessary tools.",
+        "space": "A comfortable, cozy space, suitable for families, friends, and groups.",
+        "guidance": "Personalized guidance from experienced artists."
+      },
+      "benefitsHeading": "Come to our Creative Plaster Painting Workshop to:",
+      "benefits": {
+        "relax": {
+          "title": "Relax and Relieve Stress",
+          "description": "Painting can be therapeutic and helps reduce stress and anxiety. Focus on colors and creativity for a mindful break."
+        },
+        "connect": {
+          "title": "Connect with Others",
+          "description": "Share a creative experience with friends, family, or make new connections with people who share your interests."
+        },
+        "create": {
+          "title": "Create Meaningful Gifts",
+          "description": "Your handmade creations make perfect personalized gifts for special occasions and loved ones."
+        },
+        "discover": {
+          "title": "Discover Your Artistic Potential",
+          "description": "Uncover hidden talents and build confidence in your creative abilities with our supportive guidance."
+        }
+      },
+      "closing": "We believe everyone has the ability to create. Let us help you discover and develop your artistic potential!"
+    }
   },
   "search": {
     "title": "Search Products",
