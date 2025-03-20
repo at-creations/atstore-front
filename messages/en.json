@@ -71,6 +71,8 @@
     "phone": "Phone",
     "address": "Address",
     "hours": "Business Hours",
+    "findUs": "Find Us",
+    "getDirections": "Get Directions",
     "toBeUpdated": "To be updated"
   },
   "products": {
