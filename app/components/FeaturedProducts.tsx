@@ -34,7 +34,7 @@ export function FeaturedProducts() {
 
   if (isLoading) {
     return (
-      <section className="py-20 px-4 sm:px-6 md:px-10">
+      <section className="px-4 sm:px-6 md:px-10">
         <div className="relative container max-w-6xl mx-auto">
           <SectionTitle title={t("title")} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -59,7 +59,7 @@ export function FeaturedProducts() {
 
   if (error) {
     return (
-      <section className="py-20 px-4 sm:px-6 md:px-10">
+      <section className="px-4 sm:px-6 md:px-10">
         <SectionTitle title={t("title")} />
         <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 p-6 rounded-xl text-center max-w-xl mx-auto">
           <p className="text-lg font-medium">{error}</p>
@@ -69,7 +69,7 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section className="py-20 px-4 sm:px-6 md:px-10 relative">
+    <section className="px-4 sm:px-6 md:px-10 relative">
       <div className="relative container max-w-6xl mx-auto">
         <SectionTitle title={t("title")} />
 

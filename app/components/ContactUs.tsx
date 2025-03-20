@@ -4,21 +4,8 @@ import { Mail, Phone, MapPin, Clock, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "./ui/SectionTitle";
 import { useState, useEffect } from "react";
-import { API_HOST } from "../constants";
-
-interface BusinessHours {
-  day: string;
-  openTime: string;
-  closeTime: string;
-}
-
-interface StoreInfo {
-  _id: string;
-  email: string;
-  phone: string;
-  address: string;
-  businessHours: BusinessHours[];
-}
+import { fetchStoreInfo } from "../utils/api";
+import type { StoreInfo } from "../types/api";
 
 export function ContactUs() {
   const t = useTranslations("contact");
@@ -27,16 +14,10 @@ export function ContactUs() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchStoreInfo() {
+    async function loadStoreInfo() {
       try {
-        const response = await fetch(`${API_HOST}/store-info`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch store information");
-        }
-
-        const data = await response.json();
-        setStoreInfo(data.data);
+        const data = await fetchStoreInfo();
+        setStoreInfo(data);
       } catch (err) {
         console.error("Error fetching store information:", err);
         setError(err instanceof Error ? err.message : "An error occurred");
@@ -45,7 +26,7 @@ export function ContactUs() {
       }
     }
 
-    fetchStoreInfo();
+    loadStoreInfo();
   }, []);
 
   // Format business hours for display

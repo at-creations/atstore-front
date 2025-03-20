@@ -1,15 +1,36 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
-import {
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
+import { Mail, MapPin, Phone, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { fetchStoreInfo } from "../utils/api";
+import type { StoreInfo } from "../types/api";
 
 export default function Footer() {
   const t = useTranslations("footer");
   const currentYear = new Date().getFullYear();
+
+  const [storeInfo, setStoreInfo] = useState<StoreInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function loadStoreInfo() {
+      try {
+        const data = await fetchStoreInfo();
+        setStoreInfo(data);
+      } catch (err) {
+        console.error("Error fetching store information:", err);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadStoreInfo();
+  }, []);
 
   return (
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
@@ -33,7 +54,6 @@ export default function Footer() {
             <p className="text-gray-600 dark:text-gray-400 md:max-w-72 text-justify text-sm">
               {t("description")}
             </p>
-            
           </div>
 
           {/* Quick Links Column */}
@@ -107,41 +127,58 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-4 text-gray-800 dark:text-gray-200">
               {t("contactUs")}
             </h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <MapPin
-                  size={18}
-                  className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0"
-                />
-                <span className="text-gray-600 dark:text-gray-400">
-                  To be updated
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone
-                  size={18}
-                  className="text-blue-600 dark:text-blue-400 flex-shrink-0"
-                />
-                <a
-                  href="tel:+15141234567"
-                  className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                >
-                  To be updated
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail
-                  size={18}
-                  className="text-blue-600 dark:text-blue-400 flex-shrink-0"
-                />
-                <a
-                  href="mailto:info@atcreations.ca"
-                  className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                >
-                  info@atcreations.ca
-                </a>
-              </li>
-            </ul>
+            {isLoading ? (
+              <div className="flex items-center space-x-2 text-gray-500">
+                <Loader2 size={16} className="animate-spin" />
+                <span>{t("loading")}</span>
+              </div>
+            ) : error ? (
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
+                {t("contactLoadError")}
+              </p>
+            ) : (
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <MapPin
+                    size={18}
+                    className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0"
+                  />
+                  <span className="text-gray-600 dark:text-gray-400">
+                    {storeInfo?.address && storeInfo.address.trim() !== ""
+                      ? storeInfo.address
+                      : t("toBeUpdated")}
+                  </span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Phone
+                    size={18}
+                    className="text-blue-600 dark:text-blue-400 flex-shrink-0"
+                  />
+                  <a
+                    href={`tel:${storeInfo?.phone || ""}`}
+                    className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                  >
+                    {storeInfo?.phone && storeInfo.phone.trim() !== ""
+                      ? storeInfo.phone
+                      : t("toBeUpdated")}
+                  </a>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Mail
+                    size={18}
+                    className="text-blue-600 dark:text-blue-400 flex-shrink-0"
+                  />
+                  <a
+                    href={`mailto:${storeInfo?.email || "info@atcreations.ca"}`}
+                    className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                  >
+                    {storeInfo?.email && storeInfo.email.trim() !== ""
+                      ? storeInfo.email
+                      : "info@atcreations.ca"}
+                  </a>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>
