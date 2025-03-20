@@ -2,23 +2,24 @@
 
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { Home, ShoppingBag, Search, X, Users, Phone } from "lucide-react";
+import { Home, ShoppingBag, Search, X, Users, Phone, Brush } from "lucide-react";
 import Image from "next/image";
 import { CDN_HOST } from "@/app/constants";
 import LocaleSwitcher from "./LocaleSwitcher";
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 export default function Header() {
   const t = useTranslations("common");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { name: t("home"), href: "/", icon: Home },
     { name: t("products"), href: "/products", icon: ShoppingBag },
-    { name: t("search"), href: "/search", icon: Search },
+    { name: t("workshops"), href: "/workshops", icon: Brush },
     { name: t("about"), href: "/about", icon: Users },
     { name: t("contact"), href: "/contact", icon: Phone },
   ];
@@ -29,6 +30,14 @@ export default function Header() {
       return pathname === "/";
     }
     return pathname.startsWith(href);
+  };
+
+  // Handle search button click
+  const handleSearchClick = () => {
+    router.push("/search");
+    if (mobileMenuOpen) {
+      setMobileMenuOpen(false);
+    }
   };
 
   // Close mobile menu when screen size changes to desktop
@@ -115,10 +124,23 @@ export default function Header() {
             </nav>
           </div>
 
-          {/* Right side with locale switcher & mobile menu button */}
+          {/* Right side with search icon, locale switcher & mobile menu button */}
           <div className="flex items-center justify-end gap-4 lg:col-span-1">
-            {/* Mobile navigation toggle & locale switcher */}
+            {/* Search button */}
+            <button
+              onClick={handleSearchClick}
+              aria-label={t("search")}
+              className={`text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${
+                pathname.startsWith("/search") ? "text-blue-600 dark:text-blue-400" : ""
+              }`}
+            >
+              <Search className="h-5 w-5" />
+            </button>
+            
+            {/* Locale switcher */}
             <LocaleSwitcher color="blue" />
+            
+            {/* Mobile menu button - only visible on small screens */}
             <button
               className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -176,6 +198,19 @@ export default function Header() {
                   </Link>
                 );
               })}
+              
+              {/* Add search item in mobile menu as well */}
+              <button
+                onClick={handleSearchClick}
+                className={`flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 text-left w-full ${
+                  pathname.startsWith("/search")
+                    ? "text-blue-600 dark:text-blue-400 bg-gray-50 dark:bg-gray-800 border-l-2 border-blue-600 dark:border-blue-400"
+                    : ""
+                }`}
+              >
+                <Search className="h-5 w-5 mr-3 flex-shrink-0" />
+                <span>{t("search")}</span>
+              </button>
             </nav>
           </div>
         </div>

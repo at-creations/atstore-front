@@ -3,6 +3,7 @@
     "home": "Trang chủ",
     "products": "Sản phẩm",
     "search": "Tìm kiếm",
+    "workshops": "Workshops",
     "about": "Về chúng tôi",
     "contact": "Liên hệ",
     "promo": "Khuyến mãi"
@@ -89,6 +90,46 @@
     "tryOtherCategories": "Hãy thử một danh mục khác.",
     "of": "trong số",
     "results": "kết quả"
+  },
+  "workshops": {
+    "introduction": "Khám phá các xưởng sáng tạo của chúng tôi được thiết kế để truyền cảm hứng và thu hút người tham gia ở mọi lứa tuổi. Mỗi xưởng mang đến cơ hội độc đáo để học các kỹ năng mới và thể hiện sự sáng tạo của bạn trong môi trường hỗ trợ.",
+    "learnMore": "Tìm hiểu thêm",
+    "plaster-painting": {
+      "title": "Tô Tượng Sáng Tạo",
+      "summary": "Giải phóng chất nghệ sĩ bên trong bạn tại workshop tô tượng của chúng tôi! Tận hưởng trải nghiệm thư giãn và sáng tạo, lựa chọn từ nhiều mẫu tượng thạch cao để tô màu và cá nhân hóa. Phù hợp với mọi lứa tuổi và trình độ, một cách thú vị để giảm căng thẳng và tạo ra những tác phẩm độc đáo.",
+      "welcome":{
+        "heading": "Chào mừng bạn đến với Workshop Tô Tượng Sáng Tạo của AT Creations!",
+        "message": "Bạn đang tìm kiếm một không gian để thư giãn, giải tỏa căng thẳng và khơi dậy khả năng sáng tạo? Hãy đến với workshop tô tượng của chúng tôi, nơi bạn có thể thỏa sức thể hiện cá tính và tài năng của mình qua những bức tượng thạch cao trắng tinh."
+      },
+      "provideHeading": "Tại đây, chúng tôi cung cấp:",
+      "offerings": {
+        "figurines": "Hàng trăm mẫu tượng thạch cao đa dạng, từ những nhân vật hoạt hình đáng yêu đến các hình khối trừu tượng độc đáo.",
+        "paints": "Màu vẽ acrylic chất lượng cao, an toàn cho mọi lứa tuổi.",
+        "tools": "Cọ vẽ, khay pha màu và các dụng cụ hỗ trợ đầy đủ.",
+        "space": "Không gian thoải mái, ấm cúng, phù hợp cho cả gia đình, bạn bè và các nhóm.",
+        "guidance": "Hướng dẫn tận tình từ các nghệ nhân giàu kinh nghiệm."
+      },
+      "benefitsHeading": "Hãy đến với Xưởng Tô Tượng Sáng Tạo của chúng tôi để:",
+      "benefits": {
+        "relax": {
+          "title": "Thư giãn và Giải tỏa căng thẳng",
+          "description": "Vẽ tranh có thể là liệu pháp giúp giảm căng thẳng và lo lắng. Tập trung vào màu sắc và sự sáng tạo giúp tinh thần thư thái."
+        },
+        "connect": {
+          "title": "Kết nối với mọi người",
+          "description": "Chia sẻ trải nghiệm sáng tạo với bạn bè, gia đình, hoặc kết nối với những người có cùng sở thích."
+        },
+        "create": {
+          "title": "Tạo ra những món quà ý nghĩa",
+          "description": "Những tác phẩm handmade của bạn là những món quà cá nhân hoàn hảo cho các dịp đặc biệt và người thân yêu."
+        },
+        "discover": {
+          "title": "Khám phá tiềm năng nghệ thuật",
+          "description": "Khám phá tài năng tiềm ẩn và xây dựng sự tự tin trong khả năng sáng tạo của bạn với sự hướng dẫn tận tình của chúng tôi."
+        }
+      },
+      "closing": "Chúng tôi tin rằng mọi người đều có khả năng sáng tạo. Hãy để chúng tôi giúp bạn khám phá và phát huy tiềm năng nghệ thuật của mình!"
+    }
   },
   "search": {
     "title": "Tìm kiếm sản phẩm",
