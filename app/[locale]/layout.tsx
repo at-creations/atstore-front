@@ -59,7 +59,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main className="min-h-screen pt-32 sm:pt-24">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>

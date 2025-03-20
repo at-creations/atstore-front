@@ -6,8 +6,7 @@ import { ProductDetails } from "@/app/components/ProductDetails";
 import { fetchProductDetails } from "@/app/utils/api";
 import type { Product } from "@/app/types/api";
 import { slugify } from "@/app/utils/slugify";
-import { useLocale, useTranslations } from "next-intl";
-import Breadcrumbs from "@/app/components/Breadcrumbs";
+import { useLocale } from "next-intl";
 import { Spinner } from "@/app/components/Spinner";
 
 export default function ProductPage() {
@@ -20,7 +19,6 @@ export default function ProductPage() {
   const [error, setError] = useState<string | null>(null);
 
   const locale = useLocale();
-  const t = useTranslations("common");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -64,18 +62,8 @@ export default function ProductPage() {
     notFound();
   }
 
-  const productName =
-    locale === "vi" && product.name_vi ? product.name_vi : product.name;
-
-  const breadcrumbsItems = [
-    { label: t("home"), href: `/` },
-    { label: t("products"), href: `/products` },
-    { label: productName, href: `/products/${productId}/${slug}` },
-  ];
-
   return (
     <div className="container mx-auto">
-      <Breadcrumbs items={breadcrumbsItems} />
       <ProductDetails product={product} locale={locale} />
     </div>
   );

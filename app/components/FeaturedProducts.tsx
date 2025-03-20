@@ -1,86 +1,99 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Link } from "@/i18n/navigation"
-import type { Product } from "@/app/types/api"
-import { ItemCard } from "@/app/components/ItemCard"
-import { fetchFeaturedProducts } from "@/app/utils/api"
-import { slugify } from "@/app/utils/slugify"
-import { useLocale, useTranslations } from "next-intl"
+import { useEffect, useState } from "react";
+import type { Product } from "@/app/types/api";
+import { ItemCard } from "@/app/components/ItemCard";
+import { fetchFeaturedProducts } from "@/app/utils/api";
+import { slugify } from "@/app/utils/slugify";
+import { useLocale, useTranslations } from "next-intl";
+import { SectionTitle } from "./ui/SectionTitle";
+import { ArrowButton } from "./ui/ArrowButton";
 
 export function FeaturedProducts() {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const t = useTranslations("featuredProducts")
-  const locale = useLocale()
+  const t = useTranslations("featuredProducts");
+  const locale = useLocale();
 
   useEffect(() => {
     async function loadFeaturedProducts() {
       try {
-        const products = await fetchFeaturedProducts()
-        setFeaturedProducts(products)
+        const products = await fetchFeaturedProducts();
+        setFeaturedProducts(products);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred")
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
 
-    loadFeaturedProducts()
-  }, [])
+    loadFeaturedProducts();
+  }, []);
 
   if (isLoading) {
     return (
-      <section className="py-20">
-        <h2 className="section-title animate-slideUp">{t("title")}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse">
-              <div className="bg-gray-200 dark:bg-gray-700 h-64 rounded-lg mb-4"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-            </div>
-          ))}
+      <section className="py-20 px-4 sm:px-6 md:px-10">
+        <div className="relative container max-w-6xl mx-auto">
+          <SectionTitle title={t("title")} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="animate-pulse bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700"
+              >
+                <div className="bg-gray-200 dark:bg-gray-700 h-64 rounded-t-xl"></div>
+                <div className="p-5">
+                  <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 mb-3"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-1/2 mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-2/3 mt-4"></div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-    )
+    );
   }
 
   if (error) {
     return (
-      <section className="py-20">
-        <h2 className="section-title animate-slideUp">{t("title")}</h2>
-        <div className="text-center text-red-500 dark:text-red-400">
-          {error}
+      <section className="py-20 px-4 sm:px-6 md:px-10">
+        <SectionTitle title={t("title")} />
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 p-6 rounded-xl text-center max-w-xl mx-auto">
+          <p className="text-lg font-medium">{error}</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-20">
-      <h2 className="section-title animate-slideUp">{t("title")}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 stagger-animation">
-        {featuredProducts.map((product) => (
-          <ItemCard
-            key={product._id}
-            product={product}
-            slug={slugify(product.name)}
-            locale={locale}
+    <section className="py-20 px-4 sm:px-6 md:px-10 relative">
+      <div className="relative container max-w-6xl mx-auto">
+        <SectionTitle title={t("title")} />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 stagger-animation">
+          {featuredProducts.map((product) => (
+            <ItemCard
+              key={product._id}
+              product={product}
+              slug={slugify(product.name)}
+              locale={locale}
+            />
+          ))}
+        </div>
+
+        <div className="flex justify-center mt-12">
+          <ArrowButton
+            href="/products"
+            text={t("viewAll")}
+            variant="primary"
+            size="md"
+            arrowPosition="right"
           />
-        ))}
-      </div>
-      <div
-        className="text-center mt-8 animate-fadeIn"
-        style={{ animationDelay: "0.5s" }}
-      >
-        <Link href="/products" className="btn btn-primary">
-          {t("viewAll")}
-        </Link>
+        </div>
       </div>
     </section>
   );
 }
-
