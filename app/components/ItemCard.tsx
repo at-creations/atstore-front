@@ -18,7 +18,7 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
 
   return (
     <Link href={`/products/${product._id}/${slug}`} passHref>
-      <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col h-full bg-white dark:bg-gray-800 relative border border-gray-100 dark:border-gray-700">
+      <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col h-full bg-white relative border border-gray-100 rounded-[8px]">
         {/* Image container with overlay effect on hover */}
         <div className="relative h-64 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -84,7 +84,7 @@ export function ItemCard({ product, slug, locale = "en" }: ItemCardProps) {
               </p>
             ) : (
               <p className="text-gray-500 text-sm">
-                {locale === "vi" ? "Liên hệ" : "Contact for price"}
+                {locale === "vi" ? "Liên hệ để biết giá" : "Contact for price"}
               </p>
             )}
 

@@ -2,12 +2,13 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { CDN_HOST } from "../constants";
 import { SectionTitle } from "./ui/SectionTitle";
+import { ArrowButton } from "./ui/ArrowButton";
 
 export function AboutUs() {
   const t = useTranslations("about");
 
   return (
-    <section className="py-24 px-4 sm:px-6 md:px-10 animate-fadeIn">
+    <section className="px-4 sm:px-6 md:px-10 animate-fadeIn">
       <div className="container max-w-6xl mx-auto">
         {/* Using the new SectionTitle component */}
         <SectionTitle title={t("title")} />
@@ -78,6 +79,16 @@ export function AboutUs() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="flex justify-center mt-16">
+          <ArrowButton
+            href="/about"
+            text={t("moreAboutUs")}
+            variant="primary"
+            size="md"
+            arrowPosition="right"
+          />
         </div>
       </div>
     </section>

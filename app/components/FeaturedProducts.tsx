@@ -8,7 +8,7 @@ import { fetchFeaturedProducts } from "@/app/utils/api";
 import { slugify } from "@/app/utils/slugify";
 import { useLocale, useTranslations } from "next-intl";
 import { SectionTitle } from "./ui/SectionTitle";
-import { ArrowRight } from "lucide-react";
+import { ArrowButton } from "./ui/ArrowButton";
 
 export function FeaturedProducts() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
@@ -71,7 +71,6 @@ export function FeaturedProducts() {
 
   return (
     <section className="py-20 px-4 sm:px-6 md:px-10 relative">
-
       <div className="relative container max-w-6xl mx-auto">
         <SectionTitle title={t("title")} />
 
@@ -87,13 +86,13 @@ export function FeaturedProducts() {
         </div>
 
         <div className="flex justify-center mt-12">
-          <Link
+          <ArrowButton
             href="/products"
-            className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg"
-          >
-            {t("viewAll")}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+            text={t("viewAll")}
+            variant="primary"
+            size="md"
+            arrowPosition="right"
+          />
         </div>
       </div>
     </section>

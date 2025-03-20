@@ -16,14 +16,54 @@
     "title": "Về chúng tôi",
     "paragraph1": "AT Creations là cửa hàng chuyên bán các mặt hàng thủ công dùng làm quà tặng, đồ trang trí hay đồ lưu niệm trong gia đình với mong muốn mang lại cho khách hàng những sản phẩm giá trị nghệ thuật cao. Chúng tôi cũng tự hào giới thiệu những sản phẩm này được tạo ra từ những bàn tay nghệ nhân truyền thống tại đất nước chúng tôi, với mong muốn mang đến cho các bạn bè trong nước và quốc tế những sản phẩm đặc trưng riêng của mỗi vùng miền, cũng như tâm huyết của người làng nghề gửi gắm trong từng sản phẩm.",
     "paragraph2": "Các sản phẩm của chúng tôi bao gồm đồ lưu niệm, phụ kiện, quà tặng, văn phòng phẩm, và đặc biệt nhất là chúng tôi có một không gian workshop dành riêng cho những ai thích sáng tạo, thích thư giãn sau những giờ căng thẳng hoặc cần một nơi để trầm lắng để suy tư.",
-    "paragraph3": "A.T Creations hy vọng sẽ là cửa hàng lưu niệm độc đáo mà bạn có thể tìm thấy ở Vancover.",
-    "established": "2025",
+    "paragraph3": "AT Creations hy vọng sẽ là cửa hàng lưu niệm độc đáo mà bạn có thể tìm thấy ở Vancover.",
+    "established": "Thành lập năm 2025",
     "quote": "AT Creations: Tìm lại sự tĩnh lặng, khơi nguồn cảm hứng.",
-    "imageAlt": "Hình ảnh cửa hàng AT Creations tại Vancouver"
+    "imageAlt": "Hình ảnh cửa hàng AT Creations tại Vancouver",
+    "moreAboutUs": "Xem thêm về chúng tôi"
+  },
+  "aboutExpand": {
+    "title": "Về chúng tôi",
+    "paragraph1": "AT Creations là cửa hàng chuyên bán các mặt hàng thủ công dùng làm quà tặng, đồ trang trí hay đồ lưu niệm trong gia đình với mong muốn mang lại cho khách hàng những sản phẩm giá trị nghệ thuật cao. Chúng tôi cũng tự hào giới thiệu những sản phẩm này được tạo ra từ những bàn tay nghệ nhân truyền thống tại đất nước chúng tôi, với mong muốn mang đến cho các bạn bè trong nước và quốc tế những sản phẩm đặc trưng riêng của mỗi vùng miền, cũng như tâm huyết của người làng nghề gửi gắm trong từng sản phẩm.",
+    "paragraph2": "Các sản phẩm của chúng tôi bao gồm đồ lưu niệm, phụ kiện, quà tặng, văn phòng phẩm, và đặc biệt nhất là chúng tôi có một không gian workshop dành riêng cho những ai thích sáng tạo, thích thư giãn sau những giờ căng thẳng hoặc cần một nơi để trầm lắng để suy tư.",
+    "paragraph3": "AT Creations hy vọng sẽ là cửa hàng lưu niệm độc đáo mà bạn có thể tìm thấy ở Vancover.",
+    "established": "Thành lập năm 2025",
+    "quote": "AT Creations: Tìm lại sự tĩnh lặng, khơi nguồn cảm hứng.",
+    "imageAlt": "Hình ảnh cửa hàng AT Creations tại Vancouver",
+    
+    "journeyTitle": "Hành trình của AT Creations",
+    "journeyText": "AT Creations không chỉ là một cửa hàng, mà còn là một hành trình khám phá và gìn giữ những tinh hoa nghề thủ công truyền thống của Việt Nam. Chúng tôi đã dành thời gian tìm kiếm và hợp tác với những nghệ nhân tài hoa, những người đã dành cả cuộc đời để theo đuổi đam mê và gìn giữ những kỹ thuật chế tác độc đáo.",
+    "craftsImageAlt": "Sản phẩm đồ gỗ đồ gốm",
+    
+    "craftsmenTitle": "Tâm huyết của người nghệ nhân",
+    "craftsmenText": "Mỗi sản phẩm tại AT Creations đều là kết tinh của sự tỉ mỉ, khéo léo và tâm huyết của người thợ thủ công. Từ những đường nét chạm khắc tinh xảo trên gỗ, đến những đường kim mũi chỉ mềm mại trên vải, mỗi chi tiết đều thể hiện sự đam mê và tình yêu với nghề.",
+    "craftsmanImageAlt": "Nghệ nhân đang chạm khắc gỗ",
+    
+    "valuesTitle": "Giá trị cốt lõi",
+    "uniquenessTitle": "Sự độc đáo",
+    "uniquenessText": "Chúng tôi cam kết mang đến những sản phẩm thủ công độc bản, không sản xuất hàng loạt.",
+    "qualityTitle": "Chất lượng",
+    "qualityText": "Chúng tôi lựa chọn những nguyên liệu tốt nhất và kiểm tra kỹ lưỡng từng sản phẩm để đảm bảo chất lượng.",
+    "connectionTitle": "Sự kết nối",
+    "connectionText": "Chúng tôi mong muốn tạo ra một không gian kết nối giữa những người yêu thích nghệ thuật thủ công và những người nghệ nhân tài hoa.",
+    "creativityTitle": "Sự sáng tạo",
+    "creativityText": "Chúng tôi không ngừng tìm kiếm và giới thiệu những sản phẩm thủ công mới lạ, độc đáo, và tạo ra không gian workshop cho mọi người thỏa sức sáng tạo.",
+    
+    "visitTitle": "Hãy đến với AT Creations để",
+    "visitPoint1": "Khám phá những món quà tặng và đồ lưu niệm thủ công độc đáo, mang đậm dấu ấn văn hóa Việt Nam.",
+    "visitPoint2": "Tìm kiếm những phụ kiện và văn phòng phẩm thủ công tinh tế, thể hiện phong cách riêng của bạn.",
+    "visitPoint3": "Trải nghiệm không gian workshop sáng tạo, nơi bạn có thể tự tay tạo ra những sản phẩm thủ công độc đáo.",
+    "visitPoint4": "Gặp gỡ và trò chuyện với những người có cùng đam mê nghệ thuật thủ công.",
+    
+    "closingMessage": "AT Creations hy vọng sẽ là điểm đến yêu thích của bạn, nơi bạn có thể tìm thấy những giá trị thủ công đích thực và khơi nguồn cảm hứng sáng tạo."
   },
   "featuredProducts": {
     "title": "Sản phẩm nổi bật",
     "viewAll": "Xem tất cả sản phẩm"
+  },
+  "categories": {
+    "title": "Khám Phá Danh Mục",
+    "description": "Khám phá vô vàn những món đồ thủ công tinh xảo, lý tưởng để làm quà tặng, trang trí nhà cửa, hoặc mang đến nét nghệ thuật độc đáo cho cuộc sống của bạn."
   },
   "contact": {
     "title": "Liên hệ",

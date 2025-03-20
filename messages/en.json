@@ -15,15 +15,55 @@
   "about": {
     "title": "About Us",
     "paragraph1": "AT Creations offers a curated collection of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life. Each piece is meticulously crafted by skilled artisans, reflecting the rich cultural heritage of our country. From delicate souvenirs and stylish accessories to thoughtful gifts and functional stationery, our shop has something for everyone.",
-    "paragraph2": "Beyond retail, A.T Creations provides a dedicated workshop space where creativity can flourish. Whether you're seeking a relaxing escape or a place to explore your artistic side, our workshop offers a serene environment for crafting and contemplation.",
-    "paragraph3": "Discover the beauty of handcrafted artistry at A.T Creations, your one-of-a-kind souvenir destination in Vancouver.",
-    "established": "2025",
+    "paragraph2": "Beyond retail, AT Creations provides a dedicated workshop space where creativity can flourish. Whether you're seeking a relaxing escape or a place to explore your artistic side, our workshop offers a serene environment for crafting and contemplation.",
+    "paragraph3": "Discover the beauty of handcrafted artistry at AT Creations, your one-of-a-kind souvenir destination in Vancouver.",
+    "established": "Established in 2025",
     "quote": "AT Creations: Find your calm, ignite your creativity.",
-    "imageAlt": "AT Creations store Vancouver image"
+    "imageAlt": "AT Creations store Vancouver image",
+    "moreAboutUs": "More About Us"
+  },
+  "aboutExpand": {
+    "title": "About Us",
+    "paragraph1": "AT Creations offers a curated collection of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life. Each piece is meticulously crafted by skilled artisans, reflecting the rich cultural heritage of our country. From delicate souvenirs and stylish accessories to thoughtful gifts and functional stationery, our shop has something for everyone.",
+    "paragraph2": "Beyond retail, AT Creations provides a dedicated workshop space where creativity can flourish. Whether you're seeking a relaxing escape or a place to explore your artistic side, our workshop offers a serene environment for crafting and contemplation.",
+    "paragraph3": "Discover the beauty of handcrafted artistry at AT Creations, your one-of-a-kind souvenir destination in Vancouver.",
+    "established": "Established in 2025",
+    "quote": "AT Creations: Find your calm, ignite your creativity.",
+    "imageAlt": "AT Creations store Vancouver image",
+    
+    "journeyTitle": "The AT Creations Journey",
+    "journeyText": "AT Creations is more than just a store; it's a journey of discovery and preservation of Vietnam's traditional craftsmanship. We've dedicated time to seeking out and partnering with talented artisans, individuals who have devoted their lives to pursuing their passion and preserving unique crafting techniques.",
+    "craftsImageAlt": "Wooden crafts/pottery on display",
+    
+    "craftsmenTitle": "The Heart of the Artisan",
+    "craftsmenText": "Each product at A.T Creations is the culmination of the meticulousness, skill, and dedication of the craftsperson. From the intricate carvings on wood to the delicate stitches on fabric, every detail reflects passion and love for the craft.",
+    "craftsmanImageAlt": "Woodcraft artisans at work",
+    
+    "valuesTitle": "Our Core Values",
+    "uniquenessTitle": "Uniqueness",
+    "uniquenessText": "We are committed to offering one-of-a-kind handcrafted products, not mass-produced items.",
+    "qualityTitle": "Quality",
+    "qualityText": "We select the finest materials and meticulously inspect each product to ensure quality.",
+    "connectionTitle": "Connection",
+    "connectionText": "We aim to create a space that connects those who appreciate artisan crafts with talented craftspeople.",
+    "creativityTitle": "Creativity",
+    "creativityText": "We continuously seek and introduce innovative and unique handmade products, and create a workshop space for everyone to unleash their creativity.",
+    
+    "visitTitle": "Visit AT Creations to",
+    "visitPoint1": "Discover unique handcrafted gifts and souvenirs that reflect Vietnamese cultural heritage.",
+    "visitPoint2": "Find exquisite handmade accessories and stationery that express your personal style.",
+    "visitPoint3": "Experience our creative workshop space, where you can create your own unique handmade products.",
+    "visitPoint4": "Meet and connect with others who share a passion for artisan crafts.",
+    
+    "closingMessage": "AT Creations hopes to be your favorite destination, where you can find authentic handicraft values and spark your creative inspiration."
   },
   "featuredProducts": {
     "title": "Featured Products",
     "viewAll": "View All Products"
+  },
+  "categories": {
+    "title": "Explore Our Categories",
+    "description": "Discover a wide range of handcrafted treasures, perfect for gifting, home decor, or simply adding a touch of unique artistry to your life."
   },
   "contact": {
     "title": "Contact Us",

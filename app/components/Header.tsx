@@ -2,7 +2,7 @@
 
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { Home, ShoppingBag, Search, X } from "lucide-react";
+import { Home, ShoppingBag, Search, X, Users, Phone } from "lucide-react";
 import Image from "next/image";
 import { CDN_HOST } from "@/app/constants";
 import LocaleSwitcher from "./LocaleSwitcher";
@@ -19,6 +19,8 @@ export default function Header() {
     { name: t("home"), href: "/", icon: Home },
     { name: t("products"), href: "/products", icon: ShoppingBag },
     { name: t("search"), href: "/search", icon: Search },
+    { name: t("about"), href: "/about", icon: Users },
+    { name: t("contact"), href: "/contact", icon: Phone },
   ];
 
   // Check if the current path matches the nav item's href
@@ -74,9 +76,9 @@ export default function Header() {
     <header className="bg-white shadow-md shadow-blue-900/30 fixed top-0 left-0 w-full z-30 dark:bg-gray-900">
       <div className="container mx-auto px-4">
         {/* Switch to flex layout on mobile and tablet, grid on desktop (lg) */}
-        <div className="flex lg:grid lg:grid-cols-3 items-center h-16 justify-between">
+        <div className="flex lg:grid lg:grid-cols-5 items-center h-16 justify-between">
           {/* Logo on the left */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 lg:col-span-1">
             <Link href="/" className="flex items-center">
               <Image
                 src={`${CDN_HOST}/data/blue_nav_logo.png`}
@@ -89,7 +91,7 @@ export default function Header() {
           </div>
 
           {/* Navigation in the center - desktop only (lg and up) */}
-          <div className="hidden lg:flex justify-center">
+          <div className="hidden lg:flex justify-center lg:col-span-3">
             <nav className="flex-1 max-w-md">
               <ul className="flex justify-between w-full">
                 {navItems.map((item) => {
@@ -105,10 +107,6 @@ export default function Header() {
                             : ""
                         }`}
                       >
-                        <IconComponent
-                          className="h-4 w-4 mr-1.5 flex-shrink-0"
-                          aria-hidden="true"
-                        />
                         <span className="truncate">{item.name}</span>
                       </Link>
                     </li>
@@ -119,7 +117,7 @@ export default function Header() {
           </div>
 
           {/* Right side with locale switcher & mobile menu button */}
-          <div className="flex items-center justify-end gap-4">
+          <div className="flex items-center justify-end gap-4 lg:col-span-1">
             {/* Mobile navigation toggle & locale switcher */}
             <LocaleSwitcher color="blue" />
             <button

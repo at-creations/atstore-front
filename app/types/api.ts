@@ -21,6 +21,7 @@ export interface Category {
   name_vi?: string
   description: string
   description_vi?: string
+  thumbnail?: string
   created_at: string
   updated_at: string
   id: string

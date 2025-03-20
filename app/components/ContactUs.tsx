@@ -6,7 +6,7 @@ export function ContactUs() {
   const t = useTranslations("contact");
 
   return (
-    <section className="py-24 px-4 sm:px-6 md:px-10 animate-slideUp">
+    <section className="px-4 sm:px-6 md:px-10 animate-slideUp">
       <SectionTitle title={t("title")} />
 
       <div className="mt-12 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">

@@ -1,21 +1,27 @@
-"use client"
+"use client";
 
-import { Suspense } from "react"
-import { ProductList } from "@/app/components/ProductList"
-import { Spinner } from "@/app/components/Spinner"
-import { useTranslations } from "next-intl"
-import { SectionTitle } from "@/app/components/ui/SectionTitle"
+import { Suspense } from "react";
+import Image from "next/image";
+import { ProductList } from "@/app/components/ProductList";
+import { Spinner } from "@/app/components/Spinner";
+import { useTranslations } from "next-intl";
+import { CDN_HOST } from "@/app/constants";
 
 export default function Products() {
-  const t = useTranslations("products")
+  const t = useTranslations("products");
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-20">
-      <SectionTitle title={t("title")} />
+    <div className="container mx-auto px-4 py-8 mt-20 space-y-12">
+      <Image
+        src={`${CDN_HOST}/data/blue_nav_logo.png`}
+        alt="Logo"
+        width={450}
+        height={150}
+        className="w-auto mx-auto h-20"
+      />
       <Suspense fallback={<Spinner />}>
         <ProductList />
       </Suspense>
     </div>
-  )
+  );
 }
-

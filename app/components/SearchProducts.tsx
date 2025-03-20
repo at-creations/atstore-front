@@ -60,7 +60,7 @@ export function SearchProducts() {
   ];
 
   const sortByOptions = [
-    { value: "created_at-desc", label: t("default") },
+    { value: "default-", label: t("default") },
     { value: "name-asc", label: t("nameAsc") },
     { value: "name-desc", label: t("nameDesc") },
     { value: "price-asc", label: t("priceAsc") },
@@ -117,7 +117,7 @@ export function SearchProducts() {
           .split("-")
           .map(Number) || [0, 20000];
         const [sortField, sortOrder] = sortBy?.value.split("-") || [
-          "created_at",
+          "default",
           "desc",
         ];
 
