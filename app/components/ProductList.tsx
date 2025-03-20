@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { ItemCard } from "./ItemCard";
 import { CategoryButton } from "./ui/CategoryButton";
@@ -9,15 +10,17 @@ import { fetchCategories, fetchProductsByCategory } from "../utils/api";
 import type { Category, Product } from "../types/api";
 import { SkeletonCard } from "./SkeletonCard";
 import { slugify } from "../utils/slugify";
-import { DEFAULT_PAGE_SIZE } from "@/app/constants";
+import { DEFAULT_PAGE_SIZE, CDN_HOST } from "@/app/constants";
 import { useLocale, useTranslations } from "next-intl";
-import { Filter, Grid3x3, Loader2, Globe } from "lucide-react";
+import { Filter, Grid3x3, Loader2, Globe, BookOpen } from "lucide-react";
 
 export function ProductList() {
   const searchParams = useSearchParams();
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
   const initialCategory = searchParams.get("category") || "All";
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedCategoryDetails, setSelectedCategoryDetails] =
+    useState<Category | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +41,16 @@ export function ProductList() {
       try {
         const fetchedCategories = await fetchCategories();
         setCategories(fetchedCategories);
+
+        // Set selected category details
+        if (selectedCategory !== "All") {
+          const categoryDetails = fetchedCategories.find(
+            (cat) => cat._id === selectedCategory
+          );
+          setSelectedCategoryDetails(categoryDetails || null);
+        } else {
+          setSelectedCategoryDetails(null);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : t_error("fetchFailed"));
       } finally {
@@ -48,6 +61,18 @@ export function ProductList() {
     loadCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    // Update selected category details when category changes
+    if (selectedCategory !== "All" && categories.length > 0) {
+      const categoryDetails = categories.find(
+        (cat) => cat._id === selectedCategory
+      );
+      setSelectedCategoryDetails(categoryDetails || null);
+    } else {
+      setSelectedCategoryDetails(null);
+    }
+  }, [selectedCategory, categories]);
 
   useEffect(() => {
     async function loadProducts() {
@@ -153,6 +178,50 @@ export function ProductList() {
             </>
           )}
         </div>
+
+        {/* Category description section - only show when a specific category is selected */}
+        {selectedCategoryDetails && (
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex flex-col sm:flex-row items-start gap-5">
+              {/* Category thumbnail */}
+              <div className="w-full sm:w-1/4 mb-4 sm:mb-0">
+                {selectedCategoryDetails.thumbnail ? (
+                  <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
+                    <Image
+                      src={`${CDN_HOST}/${selectedCategoryDetails.thumbnail}`}
+                      alt={
+                        locale === "vi" && selectedCategoryDetails.name_vi
+                          ? selectedCategoryDetails.name_vi
+                          : selectedCategoryDetails.name
+                      }
+                      fill
+                      className="object-cover rounded"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 aspect-square rounded-lg shadow-md" />
+                )}
+              </div>
+
+              {/* Category details */}
+              <div className="flex-1">
+                <div className="flex items-start gap-2 mb-3">
+                  <BookOpen className="h-5 w-5 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                  <h3 className="font-medium text-gray-800 dark:text-gray-200">
+                    {locale === "vi" && selectedCategoryDetails.name_vi
+                      ? selectedCategoryDetails.name_vi
+                      : selectedCategoryDetails.name}
+                  </h3>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {locale === "vi" && selectedCategoryDetails.description_vi
+                    ? selectedCategoryDetails.description_vi
+                    : selectedCategoryDetails.description || t("noDescription")}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Results title and count */}
