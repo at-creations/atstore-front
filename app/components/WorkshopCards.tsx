@@ -16,7 +16,6 @@ interface Workshop {
 
 export function WorkshopCards() {
   const t = useTranslations("workshops");
-  const locale = useLocale();
 
   // For now, only one workshop (plaster painting)
   const workshops: Workshop[] = [
