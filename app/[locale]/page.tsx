@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="mx-auto relative overflow-hidden">
       <Hero />
-      <div id="home-sections" className="space-y-24 relative pb-24">
+      <div id="home-sections" className="space-y-72 relative pb-24">
         {/* Background decoratives that add aesthetic appeal */}
         <BackgroundDecoratives />
 

@@ -247,6 +247,8 @@
     "refundPolicy": "Refund Policy",
     "shippingPolicy": "Shipping Policy",
     "contactUs": "Contact Us",
-    "allRightsReserved": "All rights reserved."
+    "allRightsReserved": "All rights reserved.",
+    "loading": "Loading...",
+    "toBeUpdated": "To be updated"
   }
 }

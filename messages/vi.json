@@ -246,6 +246,8 @@
     "refundPolicy": "Chính sách hoàn tiền",
     "shippingPolicy": "Chính sách vận chuyển",
     "contactUs": "Liên hệ",
-    "allRightsReserved": "Tất cả quyền được bảo lưu"
+    "allRightsReserved": "Tất cả quyền được bảo lưu",
+    "loading": "Đang tải...",
+    "toBeUpdated": "Sẽ cập nhật sau"
   }
 }

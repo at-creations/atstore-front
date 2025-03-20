@@ -48,3 +48,16 @@ export interface ApiResponseProducts<T> {
     offset: number
   }
 }
+
+export interface BusinessHours {
+  day: string;
+  openTime: string;
+  closeTime: string;
+}
+
+export interface StoreInfo {
+  email: string;
+  phone: string;
+  address: string;
+  businessHours: BusinessHours[];
+}
