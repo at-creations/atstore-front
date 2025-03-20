@@ -22,7 +22,7 @@ export function WorkshopCards() {
     {
       id: "plaster-painting",
       imageUrl: `${CDN_HOST}/data/workshop-space.jpg`,
-      route: "/workshop/plaster-painting",
+      route: "/workshops/plaster-painting",
       duration: "2 hours",
       capacity: "10-15 people",
     },
