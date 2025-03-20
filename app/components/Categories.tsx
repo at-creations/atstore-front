@@ -23,7 +23,6 @@ export function ExploreCategories() {
     async function loadCategories() {
       try {
         const fetchedCategories = await fetchCategories();
-        console.log(fetchedCategories);
         setCategories(fetchedCategories);
       } catch (err) {
         setError(err instanceof Error ? err.message : t_error("fetchFailed"));
