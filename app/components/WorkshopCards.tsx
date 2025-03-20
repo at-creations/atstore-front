@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { CDN_HOST } from "../constants";
 import Image from "next/image";
