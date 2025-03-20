@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { CDN_HOST } from "../constants";
-import { SectionTitle } from "./ui/SectionTitle";
 
 export function AboutUsExpand() {
   const t = useTranslations("aboutExpand");

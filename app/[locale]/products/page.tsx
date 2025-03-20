@@ -4,11 +4,9 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { ProductList } from "@/app/components/ProductList";
 import { Spinner } from "@/app/components/Spinner";
-import { useTranslations } from "next-intl";
 import { CDN_HOST } from "@/app/constants";
 
 export default function Products() {
-  const t = useTranslations("products");
 
   return (
     <div className="container mx-auto px-4 py-8 mt-20 space-y-12">

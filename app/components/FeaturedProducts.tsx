@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Link } from "@/i18n/navigation";
 import type { Product } from "@/app/types/api";
 import { ItemCard } from "@/app/components/ItemCard";
 import { fetchFeaturedProducts } from "@/app/utils/api";

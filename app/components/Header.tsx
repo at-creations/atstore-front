@@ -96,7 +96,6 @@ export default function Header() {
               <ul className="flex justify-between w-full">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
-                  const IconComponent = item.icon;
                   return (
                     <li key={item.name} className="whitespace-nowrap">
                       <Link
