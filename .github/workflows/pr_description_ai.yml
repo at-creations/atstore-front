@@ -87,7 +87,7 @@ jobs:
           Focus on summarizing the key changes, their purpose, and any important context.
           Do not include any sensitive information or details that are not relevant to the pull request.
           Use a professional tone suitable for a development team.
-          Start with a brief summary of the changes, then list the main modifications.
+          Include a pull request title, a brief description and a detailed description of the changes.
           Do not wrap the entire description in triple backticks (```).
           Do not start or end your response with triple backticks.
           """
