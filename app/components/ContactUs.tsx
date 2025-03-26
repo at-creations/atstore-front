@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, Phone, MapPin, Clock, Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { SectionTitle } from "./ui/SectionTitle";
 import { useState, useEffect } from "react";
 import { fetchStoreInfo } from "../utils/api";
@@ -9,6 +9,7 @@ import type { StoreInfo } from "../types/api";
 
 export function ContactUs() {
   const t = useTranslations("contact");
+  const locale = useLocale();
   const [storeInfo, setStoreInfo] = useState<StoreInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -152,7 +153,7 @@ export function ContactUs() {
               </h3>
               <div className="aspect-video w-full rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2604.5470469912702!2d-123.1039814231315!3d49.24707637327446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548673f70bb9e8f9%3A0xc8b9b9778c52af34!2s4305%20Main%20St%2C%20Vancouver%2C%20BC%20V5V%203R1!5e0!3m2!1svi!2sca!4v1742497390477!5m2!1svi!2sca"
+                      src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2604.5470469912702!2d-123.1039814231315!3d49.24707637327446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548673f70bb9e8f9%3A0xc8b9b9778c52af34!2s4305%20Main%20St%2C%20Vancouver%2C%20BC%20V5V%203R1!5e0!3m2!1svi!2sca!4v1742497390477!5m2!1s${locale}!2sca`}
                   className="w-full h-full border-0"
                   loading="lazy"
                   title="AT Creations Store Location"
