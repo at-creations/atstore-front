@@ -20,7 +20,7 @@ const Custom404 = () => {
           <div className="relative">
             <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 opacity-10 blur-lg"></div>
             <Image
-              src="https://cdn2.atcreations.ca/data/blue_square.png"
+              src="https://cdn.atcreations.ca/data/blue_square.png"
               alt="AT Creations Logo"
               width={120}
               height={120}
