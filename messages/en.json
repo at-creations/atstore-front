@@ -74,7 +74,8 @@
     "hours": "Business Hours",
     "findUs": "Find Us",
     "getDirections": "Get Directions",
-    "toBeUpdated": "To be updated"
+    "toBeUpdated": "To be updated",
+    "closed": "Closed"
   },
   "products": {
     "title": "Our Products",
