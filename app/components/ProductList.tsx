@@ -17,8 +17,9 @@ import { Filter, Grid3x3, Loader2, Globe, BookOpen } from "lucide-react";
 export function ProductList() {
   const searchParams = useSearchParams();
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
-  const initialCategory = searchParams.get("category") || "All";
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const initialCategorySlug = searchParams.get("category") || "all";
+  const [selectedCategorySlug, setSelectedCategorySlug] =
+    useState(initialCategorySlug);
   const [selectedCategoryDetails, setSelectedCategoryDetails] =
     useState<Category | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -43,9 +44,9 @@ export function ProductList() {
         setCategories(fetchedCategories);
 
         // Set selected category details
-        if (selectedCategory !== "All") {
+        if (selectedCategorySlug !== "all") {
           const categoryDetails = fetchedCategories.find(
-            (cat) => cat._id === selectedCategory
+            (cat) => cat.slug === selectedCategorySlug
           );
           setSelectedCategoryDetails(categoryDetails || null);
         } else {
@@ -64,35 +65,30 @@ export function ProductList() {
 
   useEffect(() => {
     // Update selected category details when category changes
-    if (selectedCategory !== "All" && categories.length > 0) {
+    if (selectedCategorySlug !== "all" && categories.length > 0) {
       const categoryDetails = categories.find(
-        (cat) => cat._id === selectedCategory
+        (cat) => cat.slug === selectedCategorySlug
       );
       setSelectedCategoryDetails(categoryDetails || null);
     } else {
       setSelectedCategoryDetails(null);
     }
-  }, [selectedCategory, categories]);
+  }, [selectedCategorySlug, categories]);
 
   useEffect(() => {
     async function loadProducts() {
       setIsLoading(true);
       try {
         const offset = (currentPage - 1) * itemsPerPage;
-        const fetchedProductsResponse =
-          selectedCategory === "All"
-            ? await fetchProductsByCategory("", itemsPerPage, offset)
-            : await fetchProductsByCategory(
-                selectedCategory,
-                itemsPerPage,
-                offset
-              );
+        const fetchedProductsResponse = await fetchProductsByCategory(
+          selectedCategorySlug,
+          itemsPerPage,
+          offset
+        );
         setProducts(fetchedProductsResponse.data);
         if (fetchedProductsResponse.metadata) {
-          setTotalPages(
-            Math.ceil(fetchedProductsResponse.metadata.total / itemsPerPage)
-          );
-          setTotalResults(fetchedProductsResponse.metadata.total);
+          setTotalPages(fetchedProductsResponse.metadata.totalPages);
+          setTotalResults(fetchedProductsResponse.metadata.totalCount);
         } else {
           setTotalPages(1);
           setTotalResults(fetchedProductsResponse.data.length);
@@ -106,7 +102,7 @@ export function ProductList() {
 
     loadProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, currentPage, itemsPerPage]);
+  }, [selectedCategorySlug, currentPage, itemsPerPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -119,12 +115,12 @@ export function ProductList() {
     setCurrentPage(page);
   };
 
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = (categorySlug: string) => {
     const url = new URL(window.location.href);
-    url.searchParams.set("category", category);
+    url.searchParams.set("category", categorySlug);
     url.searchParams.set("page", "1");
     window.history.pushState({}, "", url.toString());
-    setSelectedCategory(category);
+    setSelectedCategorySlug(categorySlug);
     setCurrentPage(1);
   };
 
@@ -157,8 +153,8 @@ export function ProductList() {
           ) : (
             <>
               <CategoryButton
-                active={selectedCategory === "All"}
-                onClick={() => handleCategoryChange("All")}
+                active={selectedCategorySlug === "all"}
+                onClick={() => handleCategoryChange("all")}
                 icon={<Globe className="h-4 w-4" />}
               >
                 {t("all")}
@@ -167,11 +163,11 @@ export function ProductList() {
               {categories.map((category) => (
                 <CategoryButton
                   key={category._id}
-                  active={selectedCategory === category._id}
-                  onClick={() => handleCategoryChange(category._id)}
+                  active={selectedCategorySlug === category.slug}
+                  onClick={() => handleCategoryChange(category.slug)}
                 >
-                  {locale === "vi" && category.name_vi
-                    ? category.name_vi
+                  {locale === "vi" && category.nameVI
+                    ? category.nameVI
                     : category.name}
                 </CategoryButton>
               ))}
@@ -190,8 +186,8 @@ export function ProductList() {
                     <Image
                       src={`${CDN_HOST}/${selectedCategoryDetails.thumbnail}`}
                       alt={
-                        locale === "vi" && selectedCategoryDetails.name_vi
-                          ? selectedCategoryDetails.name_vi
+                        locale === "vi" && selectedCategoryDetails.nameVI
+                          ? selectedCategoryDetails.nameVI
                           : selectedCategoryDetails.name
                       }
                       fill
@@ -208,14 +204,14 @@ export function ProductList() {
                 <div className="flex items-start gap-2 mb-3">
                   <BookOpen className="h-5 w-5 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   <h3 className="font-medium text-gray-800 dark:text-gray-200">
-                    {locale === "vi" && selectedCategoryDetails.name_vi
-                      ? selectedCategoryDetails.name_vi
+                    {locale === "vi" && selectedCategoryDetails.nameVI
+                      ? selectedCategoryDetails.nameVI
                       : selectedCategoryDetails.name}
                   </h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">
-                  {locale === "vi" && selectedCategoryDetails.description_vi
-                    ? selectedCategoryDetails.description_vi
+                  {locale === "vi" && selectedCategoryDetails.descriptionVI
+                    ? selectedCategoryDetails.descriptionVI
                     : selectedCategoryDetails.description || t("noDescription")}
                 </p>
               </div>

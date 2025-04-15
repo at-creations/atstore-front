@@ -51,11 +51,11 @@ export function SearchProducts() {
   const itemsPerPage = DEFAULT_PAGE_SIZE;
 
   const categoryOptions = [
-    { value: "All", label: t("allCategories") },
+    { value: "all", label: t("allCategories") },
     ...categories.map((category) => ({
-      value: category._id,
+      value: category.slug,
       label:
-        locale === "vi" && category.name_vi ? category.name_vi : category.name,
+        locale === "vi" && category.nameVI ? category.nameVI : category.name,
     })),
   ];
 
@@ -122,25 +122,24 @@ export function SearchProducts() {
         ];
 
         const updatedSortField =
-          sortField === "name" && locale === "vi" ? "name_vi" : sortField;
+          sortField === "name" && locale === "vi"
+            ? "normalizedNameVI"
+            : sortField;
 
-        const offset = (currentPage - 1) * itemsPerPage;
         const fetchedProductsResponse = await fetchFilteredProducts(
           itemsPerPage,
-          offset,
+          currentPage,
           searchTerm,
           priceMin,
           priceMax,
           updatedSortField,
           sortOrder,
-          selectedCategory?.value === "All" ? "" : selectedCategory?.value
+          selectedCategory?.value === "all" ? "" : selectedCategory?.value
         );
         setProducts(fetchedProductsResponse.data);
         if (fetchedProductsResponse.metadata) {
-          setTotalPages(
-            Math.ceil(fetchedProductsResponse.metadata.total / itemsPerPage)
-          );
-          setTotalResults(fetchedProductsResponse.metadata.total);
+          setTotalPages(fetchedProductsResponse.metadata.totalPages);
+          setTotalResults(fetchedProductsResponse.metadata.totalCount);
         }
         setError(null);
       } catch (err) {
@@ -263,7 +262,7 @@ export function SearchProducts() {
                 </div>
                 <Select
                   id="category"
-                  value={selectedCategory?.value || "All"}
+                  value={selectedCategory?.value || "all"}
                   onChange={handleCategoryChange}
                   options={categoryOptions}
                   disabled={isLoadingCategories}
