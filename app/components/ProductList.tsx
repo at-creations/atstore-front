@@ -79,11 +79,10 @@ export function ProductList() {
     async function loadProducts() {
       setIsLoading(true);
       try {
-        const offset = (currentPage - 1) * itemsPerPage;
         const fetchedProductsResponse = await fetchProductsByCategory(
           selectedCategorySlug,
           itemsPerPage,
-          offset
+          currentPage
         );
         setProducts(fetchedProductsResponse.data);
         if (fetchedProductsResponse.metadata) {
