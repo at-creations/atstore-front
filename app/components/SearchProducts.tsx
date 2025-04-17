@@ -51,6 +51,7 @@ export function SearchProducts() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchTerm, setSearchTerm] = useState(
     searchParams.get("search") || ""
   );
@@ -244,6 +245,7 @@ export function SearchProducts() {
   useEffect(() => {
     setCurrentPage(1);
     updateSearchParams({ search: debouncedSearchTerm, page: "1" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {

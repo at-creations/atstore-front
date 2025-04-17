@@ -3,7 +3,7 @@ import { ImageCarousel } from "./ImageCarousel";
 import type { Product } from "../types/api";
 import { CDN_HOST } from "../constants";
 import { Link } from "@/i18n/navigation";
-import { Tag, Check, Star, Calendar, Percent, Package } from "lucide-react";
+import { Tag, Check, Star, Percent, Package } from "lucide-react";
 import Breadcrumbs from "./Breadcrumbs";
 
 interface ProductDetailsProps {

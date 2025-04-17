@@ -39,17 +39,6 @@ export interface ApiResponse<T> {
   }
 }
 
-export interface ApiResponseProducts<T> {
-  message: string
-  data: T
-  metadata?: {
-    totalPages: number
-    totalCount: number
-    page: number
-    pageSize: number
-  }
-}
-
 export interface SearchProductsParams {
   pageSize: number
   page: number
