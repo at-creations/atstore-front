@@ -1,54 +1,54 @@
 export interface Product {
   _id: string
   name: string
-  name_vi?: string
+  nameVI?: string
   price: number
   description: string
-  description_vi?: string
-  category_ids: string[]
-  created_at: string
-  updated_at: string
+  descriptionVI?: string
+  categoryIds: string[]
+  createdAt: string
+  updatedAt: string
   images: string[]
   thumbnail: string
   categories: Category[] | null
-  featured: boolean
+  featured: boolean,
+  stock: number,
   discount?: number
 }
 
 export interface Category {
   _id: string
+  slug: string
   name: string
-  name_vi?: string
+  nameVI?: string
   description: string
-  description_vi?: string
+  descriptionVI?: string
   thumbnail?: string
-  created_at: string
-  updated_at: string
-  id: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface ApiResponse<T> {
   message: string
   data: T
   metadata?: {
-    total: number
-    limit: number
-    offset: number
+    totalPages: number
+    totalCount: number
+    page: number
+    pageSize: number
   }
 }
 
-export interface ApiResponseProducts<T> {
-  message: string
-  data: {
-    products: T
-  }
-  metadata?: {
-    total: number
-    limit: number
-    offset: number
-  }
+export interface SearchProductsParams {
+  pageSize: number
+  page: number
+  search: string
+  minPrice: number
+  maxPrice: number
+  sort: string
+  order: string
+  categorySlugs: string
 }
-
 export interface BusinessHours {
   day: string;
   openTime: string;

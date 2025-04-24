@@ -41,7 +41,7 @@ export default function Footer() {
           <div className="space-y-5">
             <div className="flex items-center gap-2 mb-4">
               <Image
-                src="https://cdn2.atcreations.ca/data/blue_square.png"
+                src="https://cdn.atcreations.ca/data/blue_square.png"
                 alt="AT Creations Logo"
                 width={40}
                 height={40}

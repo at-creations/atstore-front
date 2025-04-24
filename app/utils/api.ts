@@ -1,23 +1,56 @@
+import axios from "axios";
 import { API_HOST } from "../constants";
-import type {
-  Product,
-  Category,
-  ApiResponse,
-  ApiResponseProducts,
-  StoreInfo,
-} from "../types/api";
+import type { Product, Category, ApiResponse, StoreInfo } from "../types/api";
+import csrfService, { CSRF_HEADER_NAME } from "./csrfService";
 
-export async function fetchFeaturedProducts(): Promise<Product[]> {
-  try {
-    const response = await fetch(`${API_HOST}/product/top`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch featured products");
+// Create axios instance with default config
+const apiClient = axios.create({
+  baseURL: API_HOST,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  timeout: 10000, // 10 seconds timeout
+});
+
+// request interceptor for handling common tasks like adding auth tokens
+apiClient.interceptors.request.use(
+  async (config) => {
+    // Only include CSRF token for methods that require protection (non-GET/HEAD/OPTIONS)
+    if (config.method && csrfService.requiresProtection(config.method)) {
+      // Ensure we have a valid token before making the request
+      await csrfService.ensureToken();
+
+      const token = csrfService.getToken();
+      if (token) {
+        config.headers[CSRF_HEADER_NAME] = token;
+      }
     }
-    const data: ApiResponse<Product[]> = await response.json();
-    return data.data;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// response interceptor for handling common responses
+apiClient.interceptors.response.use(
+  (response) => {
+    // Any status code within the range of 2xx causes this function to trigger
+    return response;
+  },
+  (error) => {
+    // Any status codes outside the range of 2xx cause this function to trigger
+    return Promise.reject(error);
+  }
+);
+
+export async function fetchFeaturedProducts(limit = 6): Promise<Product[]> {
+  try {
+    const response = await apiClient.get("/product/featured", {
+      params: { limit },
+    });
+    return response.data.data;
   } catch (error) {
     throw new Error(
-      error instanceof Error
+      axios.isAxiosError(error) && error.message
         ? error.message
         : "An error occurred while fetching featured products"
     );
@@ -30,44 +63,43 @@ function delay(ms: number) {
 
 export async function fetchCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(`${API_HOST}/category/search`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch categories");
-    }
-    const data: ApiResponse<Category[]> = await response.json();
-    return data.data;
+    const response = await apiClient.get("/category/");
+    return response.data.data;
   } catch (error) {
     throw new Error(
-      error instanceof Error
+      axios.isAxiosError(error) && error.message
         ? error.message
         : "An error occurred while fetching categories"
     );
   }
 }
 
+/**
+ *
+ * @param categorySlug category identifier, can be either "all", a specific category slug.
+ * If "all" is passed, all products will be fetched.
+ * @param pageSize number of products per page, default is 12.
+ * @param page current page number, default is 1.
+ * @returns Promise<ApiResponse<Product[]>>
+ */
 export async function fetchProductsByCategory(
-  categoryId: string,
-  limit = 12,
-  offset = 0
+  categorySlug: string = "all",
+  pageSize = 12,
+  page = 1
 ): Promise<ApiResponse<Product[]>> {
   try {
-    const [response] = await Promise.all([
-      fetch(
-        `${API_HOST}/product/search?categories=${categoryId}&limit=${limit}&offset=${offset}`
-      ),
-      delay(300),
-    ]);
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
-    const data: ApiResponseProducts<Product[]> = await response.json();
-    return {
-      ...data,
-      data: data.data.products,
-    };
+    await delay(300);
+    const response = await apiClient.get(`/product/category/${categorySlug}`, {
+      params: {
+        pageSize,
+        page,
+        cache: true,
+      },
+    });
+    return response.data;
   } catch (error) {
     throw new Error(
-      error instanceof Error
+      axios.isAxiosError(error) && error.message
         ? error.message
         : "An error occurred while fetching products"
     );
@@ -75,17 +107,12 @@ export async function fetchProductsByCategory(
 }
 
 export async function fetchProductDetails(productId: string): Promise<Product> {
-  console.log("fetchProductDetails");
   try {
-    const response = await fetch(`${API_HOST}/product/id/${productId}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch product details");
-    }
-    const data: ApiResponse<Product> = await response.json();
-    return data.data;
+    const response = await apiClient.get(`/product/id/${productId}`);
+    return response.data.data;
   } catch (error) {
     throw new Error(
-      error instanceof Error
+      axios.isAxiosError(error) && error.message
         ? error.message
         : "An error occurred while fetching product details"
     );
@@ -93,33 +120,33 @@ export async function fetchProductDetails(productId: string): Promise<Product> {
 }
 
 export async function fetchFilteredProducts(
-  limit = 12,
-  offset = 0,
+  pageSize = 12,
+  page = 1,
   search = "",
-  priceMin = 0,
-  priceMax = Infinity,
-  sortBy = "created_at",
+  minPrice = 0,
+  maxPrice = Infinity,
+  sortBy = "createdAt",
   sortOrder = "desc",
-  categoryId = ""
+  categorySlug = ""
 ): Promise<ApiResponse<Product[]>> {
   try {
-    const [response] = await Promise.all([
-      fetch(
-        `${API_HOST}/product/search?limit=${limit}&offset=${offset}&search=${search}&price_min=${priceMin}&price_max=${priceMax}&sort=${sortBy}&order=${sortOrder}&categories=${categoryId}`
-      ),
-      delay(300),
-    ]);
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
-    const data: ApiResponseProducts<Product[]> = await response.json();
-    return {
-      ...data,
-      data: data.data.products,
-    };
+    await delay(300);
+    const response = await apiClient.get("/product/search", {
+      params: {
+        pageSize,
+        page,
+        search,
+        minPrice,
+        maxPrice,
+        sort: sortBy,
+        order: sortOrder,
+        categorySlugs: categorySlug,
+      },
+    });
+    return response.data;
   } catch (error) {
     throw new Error(
-      error instanceof Error
+      axios.isAxiosError(error) && error.message
         ? error.message
         : "An error occurred while fetching products"
     );
@@ -128,17 +155,27 @@ export async function fetchFilteredProducts(
 
 export async function fetchStoreInfo(): Promise<StoreInfo> {
   try {
-    const response = await fetch(`${API_HOST}/store-info`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch store information");
-    }
-    const data: ApiResponse<StoreInfo> = await response.json();
-    return data.data;
+    const response = await apiClient.get("/store-info");
+    return response.data.data;
   } catch (error) {
     throw new Error(
-      error instanceof Error
+      axios.isAxiosError(error) && error.message
         ? error.message
         : "An error occurred while fetching store information"
     );
   }
 }
+
+export async function increaseProductViews(productId: string): Promise<void> {
+  // Only run in browser environment
+  if (typeof window === 'undefined') return;
+  
+  try {
+    await apiClient.post(`/product/views/${productId}`);
+  } catch (error) {
+    console.warn("Failed to increase product views:", error);
+  }
+}
+
+// Export the axios instance in case it needs to be used directly elsewhere
+export { apiClient };

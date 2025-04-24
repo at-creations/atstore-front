@@ -74,7 +74,8 @@
     "hours": "Business Hours",
     "findUs": "Find Us",
     "getDirections": "Get Directions",
-    "toBeUpdated": "To be updated"
+    "toBeUpdated": "To be updated",
+    "closed": "Closed"
   },
   "products": {
     "title": "Our Products",
@@ -290,6 +291,7 @@
     "contactUs": "Contact Us",
     "allRightsReserved": "All rights reserved.",
     "loading": "Loading...",
-    "toBeUpdated": "To be updated"
+    "toBeUpdated": "To be updated",
+    "contactLoadError": "An error occurred while loading contact information. Please try again later."
   }
 }

@@ -65,8 +65,8 @@ export function ExploreCategories() {
                 <Image
                   src={`${CDN_HOST}/${category.thumbnail}`}
                   alt={
-                    locale === "vi" && category.name_vi
-                      ? category.name_vi
+                    locale === "vi" && category.nameVI
+                      ? category.nameVI
                       : category.name
                   }
                   fill
@@ -83,8 +83,8 @@ export function ExploreCategories() {
               {/* Category name */}
               <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
                 <h3 className="font-medium text-sm sm:text-base truncate">
-                  {locale === "vi" && category.name_vi
-                    ? category.name_vi
+                  {locale === "vi" && category.nameVI
+                    ? category.nameVI
                     : category.name}
                 </h3>
               </div>

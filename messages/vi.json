@@ -74,7 +74,8 @@
     "hours": "Giờ làm việc",
     "findUs": "Vị trí cửa hàng",
     "getDirections": "Chỉ đường",
-    "toBeUpdated": "Sẽ cập nhật sau"
+    "toBeUpdated": "Sẽ cập nhật sau",
+    "closed": "Đóng cửa"
   },
   "products": {
     "title": "Sản phẩm của chúng tôi",
@@ -289,6 +290,7 @@
     "contactUs": "Liên hệ",
     "allRightsReserved": "Tất cả quyền được bảo lưu",
     "loading": "Đang tải...",
-    "toBeUpdated": "Sẽ cập nhật sau"
+    "toBeUpdated": "Sẽ cập nhật sau",
+    "contactLoadError": "Đã xảy ra lỗi trong quá trình tải thông tin liên hệ. Vui lòng thử lại sau."
   }
 }

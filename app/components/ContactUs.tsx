@@ -40,18 +40,108 @@ export function ContactUs() {
       return t("toBeUpdated");
     }
 
+    // Group days with the same hours
+    const groupedHours: Record<string, string[]> = {};
+    const closedDays: string[] = [];
+
+    storeInfo.businessHours.forEach((hours) => {
+      if (
+        hours.openTime.toLowerCase() === "closed" ||
+        hours.closeTime.toLowerCase() === "closed"
+      ) {
+        closedDays.push(hours.day);
+      } else {
+        const key = `${hours.openTime}-${hours.closeTime}`;
+        if (!groupedHours[key]) {
+          groupedHours[key] = [];
+        }
+        groupedHours[key].push(hours.day);
+      }
+    });
+
     return (
-      <div className="space-y-1">
-        {storeInfo.businessHours.map((hours, index) => (
-          <div key={index} className="flex flex-col">
-            <span className="font-medium">{hours.day}:</span>
-            <span>
-              {hours.openTime} - {hours.closeTime}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Display groups of days with the same hours */}
+        {Object.entries(groupedHours).map(([hours, days], index) => {
+          const [openTime, closeTime] = hours.split("-");
+          // Format consecutive days (e.g., "Monday - Friday")
+          const formattedDays = formatConsecutiveDays(days);
+
+          return (
+            <div key={index} className="flex flex-col">
+              <span className="font-medium">{formattedDays}:&nbsp;</span>
+              <span>
+                {openTime} - {closeTime}
+              </span>
+            </div>
+          );
+        })}
+
+        {/* Display closed days */}
+        {closedDays.length > 0 && (
+          <div className="flex flex-col">
+            <span className="font-medium">
+              {formatConsecutiveDays(closedDays)}:&nbsp;
             </span>
+            <span>{t("closed")}</span>
           </div>
-        ))}
+        )}
       </div>
     );
+  };
+
+  // Helper function to format consecutive days
+  const formatConsecutiveDays = (days: string[]) => {
+    const dayOrder = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+
+    // Sort days by their order in the week
+    const sortedDays = [...days].sort(
+      (a, b) => dayOrder.indexOf(a) - dayOrder.indexOf(b)
+    );
+
+    const ranges: string[] = [];
+    let rangeStart: string | null = null;
+    let rangeEnd: string | null = null;
+
+    for (let i = 0; i < sortedDays.length; i++) {
+      const currentDay = sortedDays[i];
+      const currentIndex = dayOrder.indexOf(currentDay);
+      const nextDay = sortedDays[i + 1];
+      const nextIndex = nextDay ? dayOrder.indexOf(nextDay) : -1;
+
+      if (rangeStart === null) {
+        rangeStart = currentDay;
+        rangeEnd = currentDay;
+      } else if (nextIndex === currentIndex + 1) {
+        // Days are consecutive
+        rangeEnd = nextDay;
+      } else {
+        // End of a consecutive range
+        ranges.push(
+          rangeStart === rangeEnd ? rangeStart : `${rangeStart} - ${rangeEnd}`
+        );
+
+        rangeStart = nextDay || null;
+        rangeEnd = nextDay || null;
+      }
+    }
+
+    // Add the last range
+    if (rangeStart !== null) {
+      ranges.push(
+        rangeStart === rangeEnd ? rangeStart : `${rangeStart} - ${rangeEnd}`
+      );
+    }
+
+    return ranges.join(", ");
   };
 
   return (
@@ -108,7 +198,7 @@ export function ContactUs() {
             </div>
 
             {/* Address Contact Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700 col-span-1 md:col-span-2">
               <div className="flex items-center space-x-5">
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-full">
                   <MapPin className="text-blue-500 dark:text-blue-400 h-6 w-6" />
@@ -127,12 +217,12 @@ export function ContactUs() {
             </div>
 
             {/* Hours Contact Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700 col-span-1 md:col-span-2">
               <div className="flex items-center space-x-5">
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-full">
                   <Clock className="text-blue-500 dark:text-blue-400 h-6 w-6" />
                 </div>
-                <div>
+                <div className="w-full">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                     {t("hours")}
                   </h3>
@@ -153,7 +243,7 @@ export function ContactUs() {
               </h3>
               <div className="aspect-video w-full rounded-lg overflow-hidden">
                 <iframe
-                      src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2604.5470469912702!2d-123.1039814231315!3d49.24707637327446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548673f70bb9e8f9%3A0xc8b9b9778c52af34!2s4305%20Main%20St%2C%20Vancouver%2C%20BC%20V5V%203R1!5e0!3m2!1svi!2sca!4v1742497390477!5m2!1s${locale}!2sca`}
+                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2604.5470469912702!2d-123.1039814231315!3d49.24707637327446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548673f70bb9e8f9%3A0xc8b9b9778c52af34!2s4305%20Main%20St%2C%20Vancouver%2C%20BC%20V5V%203R1!5e0!3m2!1svi!2sca!4v1742497390477!5m2!1s${locale}!2sca`}
                   className="w-full h-full border-0"
                   loading="lazy"
                   title="AT Creations Store Location"
