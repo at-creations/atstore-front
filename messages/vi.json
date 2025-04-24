@@ -290,6 +290,7 @@
     "contactUs": "Liên hệ",
     "allRightsReserved": "Tất cả quyền được bảo lưu",
     "loading": "Đang tải...",
-    "toBeUpdated": "Sẽ cập nhật sau"
+    "toBeUpdated": "Sẽ cập nhật sau",
+    "contactLoadError": "Đã xảy ra lỗi trong quá trình tải thông tin liên hệ. Vui lòng thử lại sau."
   }
 }

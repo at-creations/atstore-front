@@ -291,6 +291,7 @@
     "contactUs": "Contact Us",
     "allRightsReserved": "All rights reserved.",
     "loading": "Loading...",
-    "toBeUpdated": "To be updated"
+    "toBeUpdated": "To be updated",
+    "contactLoadError": "An error occurred while loading contact information. Please try again later."
   }
 }
