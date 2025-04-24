@@ -57,7 +57,7 @@ export function ExploreCategories() {
         <div className="grid grid-cols-2 sm:grid-cols-3 max-w-2xl mx-auto gap-4 md:gap-6">
           {categories.map((category) => (
             <Link
-              href={`/products?category=${category._id}`}
+              href={`/products?category=${category.slug}`}
               key={category._id}
               className="group relative rounded-[5px] overflow-hidden aspect-square shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
             >
